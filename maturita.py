@@ -27,6 +27,10 @@ konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
 karty_list = []
 skore = 0
 
+vyhra_nej = 0
+vklad_nej = 0
+vyhra_kolik = 0
+
 balanc = int(10000)
 mezi_vklad = 0
 
@@ -150,6 +154,26 @@ def zobraz_pravidla():
     zpet_btn = tk.Button(okno, text="Zpět", command=zobraz_menu)
     zpet_btn.pack(padx=10, pady=10)
 
+def stat():
+    okeno()
+
+    global vyhra_nej, vyhra_kolik, vklad_nej, balanc
+
+    vyhra = tk.Label(okno, text=f"Vyhrali jste................{int(vyhra_kolik)}x", font=("Arial", 20))
+    vyhra.pack()
+
+    nej_vyhra = tk.Label(okno, text=f"Nejvíc jste vyhrál................{int(vyhra_nej)}", font=("Arial", 20))
+    nej_vyhra.pack()
+
+    nej_vklad = tk.Label(okno, text=f"Největší vklad činil................{int(vklad_nej)}", font=("Arial", 20))
+    nej_vklad.pack()
+
+    if balanc == 0:
+        konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
+        konec_btn.pack(padx=10, pady=10) # Tlačítko pro ukončení hry
+    else:
+        zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
+        zpet_btn.place(x=950, y=100)
 
 
 ######################### Systém pro žetonů #########################
@@ -159,47 +183,51 @@ def vklad(obt):
 
     global balanc, mezi_vklad, obtiznost
 
-    obtiznost += obt
+    if balanc == 0:
+        stat()
 
-    balanc_text = tk.Label(okno, text=f"Tvůj balance je: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
-    balanc_text.place(x=25, y=25)
-    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="black", fg="white", font=("Arial", 30))
-    sazka_text.place(x=530, y=350)
+    else:
+        obtiznost += obt
 
-    z50 = tk.Button(okno, text="50", command=lambda: (trakce(50), 
-                                                      balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
+        balanc_text.place(x=25, y=25)
+        sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="black", fg="white", font=("Arial", 30))
+        sazka_text.place(x=530, y=350)
+
+        z50 = tk.Button(okno, text="50", command=lambda: (trakce(50), 
+                                                      balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                       sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z50.place(x=250, y=500)
+        z50.place(x=250, y=500)
 
-    z100 = tk.Button(okno, text="100", command=lambda: (trakce(100),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+        z100 = tk.Button(okno, text="100", command=lambda: (trakce(100),
+                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z100.place(x=350, y=500)
+        z100.place(x=350, y=500)
 
-    z200 = tk.Button(okno, text="200", command=lambda: (trakce(200),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+        z200 = tk.Button(okno, text="200", command=lambda: (trakce(200),
+                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z200.place(x=450, y=500)
+        z200.place(x=450, y=500)
 
-    z500 = tk.Button(okno, text="500", command=lambda: (trakce(500),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
-                                                        sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z500.place(x=550, y=500)
+        z500 = tk.Button(okno, text="500", command=lambda: (trakce(500),
+                                                            balanc_text.config(text=f"Kredit: {int(balanc)}"), 
+                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
+        z500.place(x=550, y=500)
 
-    z1000 = tk.Button(okno, text="1 000", command=lambda: (trakce(1000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+        z1000 = tk.Button(okno, text="1 000", command=lambda: (trakce(1000),
+                                                           balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z1000.place(x=650, y=500)
+        z1000.place(x=650, y=500)
 
-    z2000 = tk.Button(okno, text="2 000", command=lambda: (trakce(2000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+        z2000 = tk.Button(okno, text="2 000", command=lambda: (trakce(2000),
+                                                           balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z2000.place(x=750, y=500)
+        z2000.place(x=750, y=500)
 
-    z5000 = tk.Button(okno, text="5 000", command=lambda: (trakce(5000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
-                                                           sazka_text.config(text=f"{int(mezi_vklad)}")))
-    z5000.place(x=850, y=500)
+        z5000 = tk.Button(okno, text="5 000", command=lambda: (trakce(5000),
+                                                               balanc_text.config(text=f"Kredit: {int(balanc)}"), 
+                                                               sazka_text.config(text=f"{int(mezi_vklad)}")))
+        z5000.place(x=850, y=500)
 
     if obtiznost == 1:
         hra_btn = tk.Button(okno, text="Jde se hrát!", command=lambda: hra(1))
@@ -211,12 +239,12 @@ def vklad(obt):
     hra_btn.place(x=525, y=650) # Zobrazení tlačítka
 
     zrus_btn = tk.Button(okno, text="Zrušit sázku", bg="palevioletred2", fg="black", command=lambda: (trakce(1),
-                                                                                                      balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                                                                      balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                                                                       sazka_text.config(text=f"{int(mezi_vklad)}")))
     zrus_btn.place(x=965, y=350)
 
     all_btn = tk.Button(okno, text=" All-in", bg="cyan3", fg="black", command=lambda: (all_in(),
-                                                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
     all_btn.place(x=1000, y=500)
 
@@ -228,43 +256,43 @@ def pokracovani(balicek):
 
     global balanc, mezi_vklad, obtiznost
 
-    balanc_text = tk.Label(okno, text=f"Tvůj balance je: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
+    balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
     balanc_text.place(x=25, y=25)
     sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="black", fg="white", font=("Arial", 30))
     sazka_text.place(x=530, y=350)
 
     z50 = tk.Button(okno, text="50", command=lambda: (trakce(50), 
-                                                      balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                      balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                       sazka_text.config(text=f"{int(mezi_vklad)}")))
     z50.place(x=250, y=500)
 
     z100 = tk.Button(okno, text="100", command=lambda: (trakce(100),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
     z100.place(x=350, y=500)
 
     z200 = tk.Button(okno, text="200", command=lambda: (trakce(200),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
     z200.place(x=450, y=500)
 
     z500 = tk.Button(okno, text="500", command=lambda: (trakce(500),
-                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
     z500.place(x=550, y=500)
 
     z1000 = tk.Button(okno, text="1 000", command=lambda: (trakce(1000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                           balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
     z1000.place(x=650, y=500)
 
     z2000 = tk.Button(okno, text="2 000", command=lambda: (trakce(2000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                           balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
     z2000.place(x=750, y=500)
 
     z5000 = tk.Button(okno, text="5 000", command=lambda: (trakce(5000),
-                                                           balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                           balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
     z5000.place(x=850, y=500)
 
@@ -272,17 +300,54 @@ def pokracovani(balicek):
     hra_btn.pack(padx=10, pady=10, side="bottom") # Zobrazení tlačítka
 
     zrus_btn = tk.Button(okno, text="Zrušit sázku", bg="palevioletred2", fg="black", command=lambda: (trakce(1),
-                                                                                                      balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                                                                      balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                                                                       sazka_text.config(text=f"{int(mezi_vklad)}")))
     zrus_btn.place(x=965, y=350)
 
     all_btn = tk.Button(okno, text=" All-in", bg="cyan3", fg="black", command=lambda: (all_in(),
-                                                                                        balanc_text.config(text=f"Tvůj balance je: {int(balanc)}"), 
+                                                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
                                                                                         sazka_text.config(text=f"{int(mezi_vklad)}")))
     all_btn.place(x=1000, y=500)
 
     zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
     zpet_btn.place(x=950, y=100)
+
+def vyplaceni():
+
+    global balanc, mezi_vklad, vklad_nej, vyhra_nej, vyhra_kolik
+
+    vyhra_kolik += 1
+
+    # Vyplácení ve hře
+    if obtiznost == 1:
+            vyhra = mezi_vklad * 2.5
+            balanc += vyhra
+            
+            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
+            sazka_text.place(x=850, y=450)
+    elif obtiznost == 2:
+            vyhra = mezi_vklad * 2
+            balanc += vyhra
+
+            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
+            sazka_text.place(x=850, y=450)
+    else:
+            vyhra = mezi_vklad * 1.5
+            balanc += vyhra
+
+            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
+            sazka_text.place(x=850, y=450)
+
+    # Porovnávání největších výher a sázek
+    if mezi_vklad > vklad_nej:
+        vklad_nej = mezi_vklad
+    
+    if vyhra > vyhra_nej:
+        vyhra_nej = vyhra
+
+    print(f"nejW: {int(vyhra_nej)}")
+    print(f"nejV: {int(vklad_nej)}")
+    print(f"hracW: {int(vyhra_kolik)}")
 
 def all_in():
     global balanc, mezi_vklad
@@ -293,14 +358,13 @@ def all_in():
 def trakce(hodnota):    
     global balanc, mezi_vklad    
     
-    if balanc > 0:
+    if balanc - hodnota > 0:
         balanc -= int(hodnota)
         mezi_vklad += int(hodnota)
-
-    elif balanc <= 0:
+    else:
         varov = tk.Label(okno, text="Nemůžeš víc vsadit, nemáš dostatečný balanc", bg="red2", fg="white", font=("Arial", 20))
         varov.pack(pady=250)
-
+        
     if hodnota == 1:
         balanc += mezi_vklad
         mezi_vklad = 0
@@ -410,7 +474,7 @@ def obtiznost_menu():
     zpet_btn.pack(padx=10, pady=70, side="bottom") # Zobrazení tlačítka
 
     # Tlačítko pro stats
-    stat_btn = tk.Button(okno, text="Stat") # Tlačítko pro návrat do hlavního menu
+    stat_btn = tk.Button(okno, text="Stat", command=stat) # Tlačítko pro návrat do hlavního menu
     stat_btn.pack(padx=10, pady=70, side="bottom") # Zobrazení tlačítka
 
 # Hra
@@ -461,7 +525,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 def hit(balicek):
     okeno() 
 
-    global hrac_skore, dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     karta = balicek.pop() # Vybere kartu z balíčku
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
@@ -502,6 +566,9 @@ def hit(balicek):
         sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
         sazka_text.place(x=950, y=450)
 
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
+
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -534,7 +601,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 def double(balicek):
     okeno() 
 
-    global hrac_skore, dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     mezi_vklad = mezi_vklad * 2
 
@@ -576,6 +643,9 @@ def double(balicek):
         sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
         sazka_text.place(x=950, y=450)
 
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
+
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -598,7 +668,7 @@ def double(balicek):
 def stand(balicek):
     okeno()
 
-    global dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
     
     if hrac_skore < dealer_skore:
         okeno()
@@ -620,6 +690,9 @@ def stand(balicek):
         # Žetony
         sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
         sazka_text.place(x=950, y=450)
+
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
 
         mezi_vklad = 0
 
@@ -712,25 +785,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        if obtiznost == 1:
-            vyhra = mezi_vklad * 2.5
-            balanc += vyhra
-            
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-        elif obtiznost == 2:
-            vyhra = mezi_vklad * 2 
-            balanc += vyhra
-
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-        else:
-            vyhra = mezi_vklad * 1.5
-            balanc += vyhra
-
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-
+        vyplaceni()
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -761,25 +816,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        if obtiznost == 1:
-            vyhra = mezi_vklad * 2.5
-            balanc += vyhra
-            
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-        elif obtiznost == 2:
-            vyhra = mezi_vklad * 2
-            balanc += vyhra
-
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-        else:
-            vyhra = mezi_vklad * 1.5
-            balanc += vyhra
-
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
-
+        vyplaceni()
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -813,6 +850,9 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
         sazka_text.place(x=950, y=450)
 
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
+
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -845,6 +885,10 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         remiza_text.place(x=750, y=450)
 
         balanc += mezi_vklad
+
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
+
         mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -870,10 +914,10 @@ def hra_se_zbylymi_kartami(balicek):
         upozorneni.pack(padx=10, pady=10) # Zobrazí upozornění
 
         michal = tk.Label(okno, text="Karty se míchají ...", font=("Arial", 14))
-        michani_btn = tk.Button(okno, text="zamíchat", command=lambda: (michal.pack(padx=50, pady=30), okno.after(3500, hra(obtiznost)))) # Nadpis
+        michani_btn = tk.Button(okno, text="zamíchat", command=lambda: (michal.pack(padx=50, pady=30), okno.after(2000, hra(obtiznost)))) # Nadpis
         michani_btn.pack(padx=10, pady=20) # Zobrazení nadpisu
 
-        stat_btn = tk.Button(okno, text="Statistika", command=lambda: michani(obtiznost))
+        stat_btn = tk.Button(okno, text="Statistika", command=lambda: stat())
         stat_btn.pack(padx=10, pady=20, side="bottom")
 
 

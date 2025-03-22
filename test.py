@@ -1,20 +1,15 @@
-import tkinter as tk
+balanc = 10000  # Počáteční zůstatek
 
-def smazat_text():
-    text_widget.delete(1.0, tk.END)  # Smaže celý text v Text widgetu
+# Funkce pro snížení zůstatku
+def sniz_balanc(odecteno):
+    global balanc
+    # Zkontrolujeme, zda po odečtení nebude balanc menší než 0
+    if balanc - odecteno >= 0:
+        balanc -= odecteno
+        print(f"Nový zůstatek: {balanc}")
+    else:
+        print("Operace není možná, protože by zůstatek šel do mínusu.")
 
-# Vytvoření hlavního okna
-root = tk.Tk()
-
-# Vytvoření widgetu Text
-text_widget = tk.Text(root, height=5, width=40)
-text_widget.pack()
-
-# Vložení nějakého textu do Text widgetu
-text_widget.insert(tk.END, "Tento text bude smazán za 5 sekund.")
-
-# Zavolání funkce smazat_text po 5000 milisekundách (5 sekund)
-root.after(5000, smazat_text)
-
-# Start Tkinter aplikace
-root.mainloop()
+# Příklad volání funkce
+sniz_balanc(5000)  # Odečítá 5000, nově bude balanc 5000
+sniz_balanc(6000)  # Pokusí se odečíst 6000, což způsobí, že balanc by byl záporný
