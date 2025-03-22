@@ -23,7 +23,8 @@ pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_prav
 konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
 
 ######################### Globální promněné #########################
-celkem_her = 0
+# Hodnota je nastavena na 1 kvůli počítaní procenta. Kdyby někdo šel na statistiku bez odehrání jediné hry, tak dělím nulou a systém se rozpadá.
+celkem_her = 1
 
 vyhra_nej = 0
 vklad_nej = 0
@@ -157,25 +158,31 @@ def stat():
 
     global vyhra_nej, vyhra_kolik, vklad_nej, balanc, celkem_her
 
-    celkem = tk.Label(okno, text=f"Hráli celkem jste................{int(celkem_her)} her", font=("Arial", 20))
+    celkem = tk.Label(okno, text=f"Hráli jste celkem................ {celkem_her-1} her", font=("Arial", 20))
     celkem.pack()
 
-    vyhra = tk.Label(okno, text=f"Vyhrali jste................{int(vyhra_kolik)}x", font=("Arial", 20))
+    vyhra = tk.Label(okno, text=f"Vyhrali jste................{vyhra_kolik}x", font=("Arial", 20))
     vyhra.pack()
 
-    pro_h = (int(vyhra_kolik) / int(celkem_her)) * 100
-    procento = tk.Label(okno, text=f"Procentuálně jste vyhrál................{int(pro_h)}x", font=("Arial", 20))
+    # Výpočet procenta, odečítám 1 z důvodu, že začáteční hodnota celkem_her začína na 1 
+    pro_h = (vyhra_kolik / celkem_her) * 100
+    procento = tk.Label(okno, text=f"Procentuálně jste vyhrál................{int(pro_h)} %", font=("Arial", 20))
     procento.pack()
 
     nej_vyhra = tk.Label(okno, text=f"Nejvíc jste vyhrál................{int(vyhra_nej)}", font=("Arial", 20))
     nej_vyhra.pack()
 
-    nej_vklad = tk.Label(okno, text=f"Největší vklad činil................{int(vklad_nej)}", font=("Arial", 20))
+    nej_vklad = tk.Label(okno, text=f"Největší vklad činil................{vklad_nej}", font=("Arial", 20))
     nej_vklad.pack()
 
-    if balanc == 0:
-        konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
-        konec_btn.pack(padx=10, pady=10) # Tlačítko pro ukončení hry
+    if balanc > 0:
+        obce = 1
+    else:
+        obce = 0
+
+    if obce == 0:
+        konec_btn = tk.Button(okno, text ="Konec", command=okno.quit)
+        konec_btn.place(x=950, y=100) # Tlačítko pro ukončení hry
     else:
         zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
         zpet_btn.place(x=950, y=100)
@@ -484,6 +491,7 @@ def hra(balicek):
 
     global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
+    # Hraje se první partie a přičítá se kvůli tomu 1
     celkem_her += 1
 
     # Balíček karet
@@ -508,12 +516,18 @@ def hra(balicek):
     sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
     sazka_text.place(x=950, y=450)
 
-    double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek)) # Tlačítko pro double
-    double_btn.place(x=670, y=570) # Zobrazení tlačítka
-    hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
-    hit_btn.place(x=700, y=620) # Zobrazení tlačítka
-    stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
-    stand_btn.place(x=620, y=620) # Zobrazení tlačítka
+    if mezi_vklad * 2 > balanc:
+        hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
+        hit_btn.place(x=700, y=620) # Zobrazení tlačítka
+        stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
+        stand_btn.place(x=620, y=620) # Zobrazení tlačítka
+    else:
+        double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek)) # Tlačítko pro double
+        double_btn.place(x=670, y=570) # Zobrazení tlačítka
+        hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
+        hit_btn.place(x=700, y=620) # Zobrazení tlačítka
+        stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
+        stand_btn.place(x=620, y=620) # Zobrazení tlačítka
 
     zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
     ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
@@ -910,19 +924,21 @@ def hra_se_zbylymi_kartami(balicek):
 
     global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
 
+    # Hraje se další partie a přičítá se kvůli tomu 1
     celkem_her += 1
 
     if len(balicek) < 10: # Pokud je v balíčku méně než 10 karet
         okeno()
 
+        # Varování před nízkým počtem karet v balíčku
         upozorneni = tk.Label(okno, text="V balíčku zbývá méně jak 10 karet, chce jej znova zmíchat?", font=("Arial", 14)) # Vytvoří label s upozorněním
         upozorneni.pack(padx=10, pady=10) # Zobrazí upozornění
 
         michani_btn = tk.Button(okno, text="zamíchat", command=lambda: okno.after(1500, hra(obtiznost))) # Nadpis
-        michani_btn.pack(padx=10, pady=20) # Zobrazení nadpisu
+        michani_btn.pack(padx=10, pady=20) # Zobrazení tlačítka pro míchání 
 
         stat_btn = tk.Button(okno, text="Statistika", command=lambda: stat())
-        stat_btn.pack(padx=10, pady=20, side="bottom")
+        stat_btn.pack(padx=10, pady=20, side="bottom") # Zobrazení tlačítka pro statistiku 
 
     else:
         # Hráč
@@ -944,12 +960,18 @@ def hra_se_zbylymi_kartami(balicek):
         sazka_text.place(x=950, y=450)
 
         # Tlačítka pro Hit a Stand i Double
-        double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek)) # Tlačítko pro double
-        double_btn.place(x=670, y=570) # Zobrazení tlačítka
-        hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
-        hit_btn.place(x=700, y=620) # Zobrazení tlačítka
-        stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
-        stand_btn.place(x=620, y=620) # Zobrazení tlačítka
+        if mezi_vklad * 2 > balanc:
+            hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
+            hit_btn.place(x=700, y=620) # Zobrazení tlačítka
+            stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
+            stand_btn.place(x=620, y=620) # Zobrazení tlačítka
+        else:
+            double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek)) # Tlačítko pro double
+            double_btn.place(x=670, y=570) # Zobrazení tlačítka
+            hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek)) # Tlačítko pro další kartu
+            hit_btn.place(x=700, y=620) # Zobrazení tlačítka
+            stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek)) # Tlačítko pro stání
+            stand_btn.place(x=620, y=620) # Zobrazení tlačítka
 
         # Kolik karet zbývá v balíčku
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
