@@ -23,9 +23,7 @@ pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_prav
 konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
 
 ######################### Globální promněné #########################
-
-karty_list = []
-skore = 0
+celkem_her = 0
 
 vyhra_nej = 0
 vklad_nej = 0
@@ -157,10 +155,17 @@ def zobraz_pravidla():
 def stat():
     okeno()
 
-    global vyhra_nej, vyhra_kolik, vklad_nej, balanc
+    global vyhra_nej, vyhra_kolik, vklad_nej, balanc, celkem_her
+
+    celkem = tk.Label(okno, text=f"Hráli celkem jste................{int(celkem_her)} her", font=("Arial", 20))
+    celkem.pack()
 
     vyhra = tk.Label(okno, text=f"Vyhrali jste................{int(vyhra_kolik)}x", font=("Arial", 20))
     vyhra.pack()
+
+    pro_h = (int(vyhra_kolik) / int(celkem_her)) * 100
+    procento = tk.Label(okno, text=f"Procentuálně jste vyhrál................{int(pro_h)}x", font=("Arial", 20))
+    procento.pack()
 
     nej_vyhra = tk.Label(okno, text=f"Nejvíc jste vyhrál................{int(vyhra_nej)}", font=("Arial", 20))
     nej_vyhra.pack()
@@ -345,10 +350,6 @@ def vyplaceni():
     if vyhra > vyhra_nej:
         vyhra_nej = vyhra
 
-    print(f"nejW: {int(vyhra_nej)}")
-    print(f"nejV: {int(vklad_nej)}")
-    print(f"hracW: {int(vyhra_kolik)}")
-
 def all_in():
     global balanc, mezi_vklad
 
@@ -358,7 +359,7 @@ def all_in():
 def trakce(hodnota):    
     global balanc, mezi_vklad    
     
-    if balanc - hodnota > 0:
+    if balanc - hodnota >= 0:
         balanc -= int(hodnota)
         mezi_vklad += int(hodnota)
     else:
@@ -420,7 +421,7 @@ def michani(obt):
     return balicek # Vrátí zamíchaný balíček jako výstup
 
 # Funkce pro rozdání karet
-def rozdani_karet(kdo, pocet_karet, balicek,): 
+def rozdani_karet(kdo, pocet_karet, balicek,):
     karty_list = [] # Seznam karet
     skore = 0
 
@@ -481,7 +482,9 @@ def obtiznost_menu():
 def hra(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost # Globální proměnné pro skóre, seznamy karet
+    global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
+
+    celkem_her += 1
 
     # Balíček karet
     
@@ -905,7 +908,9 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
 def hra_se_zbylymi_kartami(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
+
+    celkem_her += 1
 
     if len(balicek) < 10: # Pokud je v balíčku méně než 10 karet
         okeno()
@@ -913,13 +918,11 @@ def hra_se_zbylymi_kartami(balicek):
         upozorneni = tk.Label(okno, text="V balíčku zbývá méně jak 10 karet, chce jej znova zmíchat?", font=("Arial", 14)) # Vytvoří label s upozorněním
         upozorneni.pack(padx=10, pady=10) # Zobrazí upozornění
 
-        michal = tk.Label(okno, text="Karty se míchají ...", font=("Arial", 14))
-        michani_btn = tk.Button(okno, text="zamíchat", command=lambda: (michal.pack(padx=50, pady=30), okno.after(2000, hra(obtiznost)))) # Nadpis
+        michani_btn = tk.Button(okno, text="zamíchat", command=lambda: okno.after(1500, hra(obtiznost))) # Nadpis
         michani_btn.pack(padx=10, pady=20) # Zobrazení nadpisu
 
         stat_btn = tk.Button(okno, text="Statistika", command=lambda: stat())
         stat_btn.pack(padx=10, pady=20, side="bottom")
-
 
     else:
         # Hráč
