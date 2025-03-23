@@ -40,7 +40,7 @@ dealer_skore = 0
 bot_skore = 0
 hrac_karty_list = 0
 dealer_karty_list = 0
-bot_karty_listy =0
+bot_karty_list =0
 vyhra_hrac = 0
 vyhra_dealer = 0
 vyhra_bot = 0
@@ -57,58 +57,58 @@ balicek = []
 
 # Přiřazení hodnoty k obrázku
 obrazky = {
-    "2♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/2_of_clubs.png",
-    "3♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/3_of_clubs.png",
-    "4♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/4_of_clubs.png",
-    "5♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/5_of_clubs.png",
-    "6♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/6_of_clubs.png",
-    "7♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/7_of_clubs.png",
-    "8♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/8_of_clubs.png",
-    "9♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/9_of_clubs.png",
-    "10♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/10_of_clubs.png",
-    "J♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/jack_of_clubs2.png",
-    "Q♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/queen_of_clubs2.png",
-    "K♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/king_of_clubs2.png",
-    "A♧": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/ace_of_clubs.png",
-    "2♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/2_of_spades.png",
-    "3♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/3_of_spades.png",
-    "4♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/4_of_spades.png",
-    "5♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/5_of_spades.png",
-    "6♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/6_of_spades.png",
-    "7♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/7_of_spades.png",
-    "8♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/8_of_spades.png",
-    "9♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/9_of_spades.png",
-    "10♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/10_of_spades.png",
-    "J♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/jack_of_spades2.png",
-    "Q♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/queen_of_spades2.png",
-    "K♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/king_of_spades2.png",
-    "A♤": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/ace_of_spades2.png",
-    "2♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/2_of_hearts.png",
-    "3♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/3_of_hearts.png",
-    "4♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/4_of_hearts.png",
-    "5♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/5_of_hearts.png",
-    "6♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/6_of_hearts.png",
-    "7♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/7_of_hearts.png",
-    "8♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/8_of_hearts.png",
-    "9♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/9_of_hearts.png",
-    "10♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/10_of_hearts.png",
-    "J♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/jack_of_hearts2.png",
-    "Q♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/queen_of_hearts2.png",
-    "K♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/king_of_hearts2.png",
-    "A♡": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/ace_of_hearts.png",
-    "2♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/2_of_diamonds.png",
-    "3♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/3_of_diamonds.png",
-    "4♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/4_of_diamonds.png",
-    "5♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/5_of_diamonds.png",
-    "6♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/6_of_diamonds.png",
-    "7♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/7_of_diamonds.png",
-    "8♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/8_of_diamonds.png",
-    "9♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/9_of_diamonds.png",
-    "10♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/10_of_diamonds.png",
-    "J♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/jack_of_diamonds2.png",
-    "Q♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/queen_of_diamonds2.png",
-    "K♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/king_of_diamonds2.png",
-    "A♢": "/home/johnmateo/Dokumenty/Skola/AAAAAA/PNG-cards-1.3/ace_of_diamonds.png"
+    "2♧": "PNG-cards-1.3/2_of_clubs.png",
+    "3♧": "PNG-cards-1.3/3_of_clubs.png",
+    "4♧": "PNG-cards-1.3/4_of_clubs.png",
+    "5♧": "PNG-cards-1.3/5_of_clubs.png",
+    "6♧": "PNG-cards-1.3/6_of_clubs.png",
+    "7♧": "PNG-cards-1.3/7_of_clubs.png",
+    "8♧": "PNG-cards-1.3/8_of_clubs.png",
+    "9♧": "PNG-cards-1.3/9_of_clubs.png",
+    "10♧": "PNG-cards-1.3/10_of_clubs.png",
+    "J♧": "PNG-cards-1.3/jack_of_clubs2.png",
+    "Q♧": "PNG-cards-1.3/queen_of_clubs2.png",
+    "K♧": "PNG-cards-1.3/king_of_clubs2.png",
+    "A♧": "PNG-cards-1.3/ace_of_clubs.png",
+    "2♤": "PNG-cards-1.3/2_of_spades.png",
+    "3♤": "PNG-cards-1.3/3_of_spades.png",
+    "4♤": "PNG-cards-1.3/4_of_spades.png",
+    "5♤": "PNG-cards-1.3/5_of_spades.png",
+    "6♤": "PNG-cards-1.3/6_of_spades.png",
+    "7♤": "PNG-cards-1.3/7_of_spades.png",
+    "8♤": "PNG-cards-1.3/8_of_spades.png",
+    "9♤": "PNG-cards-1.3/9_of_spades.png",
+    "10♤": "PNG-cards-1.3/10_of_spades.png",
+    "J♤": "PNG-cards-1.3/jack_of_spades2.png",
+    "Q♤": "PNG-cards-1.3/queen_of_spades2.png",
+    "K♤": "PNG-cards-1.3/king_of_spades2.png",
+    "A♤": "PNG-cards-1.3/ace_of_spades2.png",
+    "2♡": "PNG-cards-1.3/2_of_hearts.png",
+    "3♡": "PNG-cards-1.3/3_of_hearts.png",
+    "4♡": "PNG-cards-1.3/4_of_hearts.png",
+    "5♡": "PNG-cards-1.3/5_of_hearts.png",
+    "6♡": "PNG-cards-1.3/6_of_hearts.png",
+    "7♡": "PNG-cards-1.3/7_of_hearts.png",
+    "8♡": "PNG-cards-1.3/8_of_hearts.png",
+    "9♡": "PNG-cards-1.3/9_of_hearts.png",
+    "10♡": "PNG-cards-1.3/10_of_hearts.png",
+    "J♡": "PNG-cards-1.3/jack_of_hearts2.png",
+    "Q♡": "PNG-cards-1.3/queen_of_hearts2.png",
+    "K♡": "PNG-cards-1.3/king_of_hearts2.png",
+    "A♡": "PNG-cards-1.3/ace_of_hearts.png",
+    "2♢": "PNG-cards-1.3/2_of_diamonds.png",
+    "3♢": "PNG-cards-1.3/3_of_diamonds.png",
+    "4♢": "PNG-cards-1.3/4_of_diamonds.png",
+    "5♢": "PNG-cards-1.3/5_of_diamonds.png",
+    "6♢": "PNG-cards-1.3/6_of_diamonds.png",
+    "7♢": "PNG-cards-1.3/7_of_diamonds.png",
+    "8♢": "PNG-cards-1.3/8_of_diamonds.png",
+    "9♢": "PNG-cards-1.3/9_of_diamonds.png",
+    "10♢": "PNG-cards-1.3/10_of_diamonds.png",
+    "J♢": "PNG-cards-1.3/jack_of_diamonds2.png",
+    "Q♢": "PNG-cards-1.3/queen_of_diamonds2.png",
+    "K♢": "PNG-cards-1.3/king_of_diamonds2.png",
+    "A♢": "PNG-cards-1.3/ace_of_diamonds.png"
 }
 
 ######################### Správa okna #########################
@@ -156,6 +156,7 @@ def zobraz_pravidla():
     zpet_btn = tk.Button(okno, text="Zpět", command=zobraz_menu)
     zpet_btn.pack(padx=10, pady=10)
 
+# Zobrazení statistiky
 def stat():
     okeno()
 
@@ -194,7 +195,6 @@ def stat():
     else:
         zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
         zpet_btn.place(x=950, y=100)
-
 
 ######################### Systém pro žetonů #########################
 
@@ -393,6 +393,7 @@ def trakce(hodnota):
     else: # V jiném případě vyskoči varování
         varov = tk.Label(okno, text="Nemůžeš víc vsadit, nemáš dostatečný balanc", bg="red2", fg="white", font=("Arial", 20))
         varov.pack(pady=250)
+        okno.after(1500, varov.pack_forget)
         
     if hodnota == 1:
         balanc += mezi_vklad
@@ -425,11 +426,13 @@ def zobrazit_karty(karty_list):
         image_labels.append(vize) # Přidání labelu do listu
         if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
             vize.place(x=330 + 45 * hrac_karty_list.index(karta), y=380) # Zobrazí karty hráče
-        else: # Pokud se jedná o karty dealera
+        elif karty_list == dealer_karty_list: # Pokud se jedná o karty dealera
             vize.place(x=330 + 45 * dealer_karty_list.index(karta), y=70) # Zobrazí karty dealera
+        else:
+            vize.place(x=330 + 45 * bot_karty_list.index(karta), y=380)
 
     # Zobrazení karty lícem dolů - estetický důvod
-    zadni_img = Image.open("/home/johnmateo/Dokumenty/Skola/AAAAAA/poker back /card back blue.png") # Otevření obrázku pro zadní stranu karty
+    zadni_img = Image.open("poker back /card back blue.png") # Otevření obrázku pro zadní stranu karty
     zadni_img = zadni_img.resize((110, 165), Image.LANCZOS) # Změna velikosti obrázku
     zadni_img_tk = ImageTk.PhotoImage(zadni_img) # Převedení obrázku do formátu, který tkinter může zobrazit
     zadni = tk.Label(okno, image=zadni_img_tk) # Vytvoření labelu s obrázkem
@@ -449,7 +452,7 @@ def michani(obt):
     return balicek # Vrátí zamíchaný balíček jako výstup
 
 # Funkce pro rozdání karet
-def rozdani_karet(kdo, pocet_karet, balicek,):
+def rozdani_karet(pocet_karet, balicek,):
     karty_list = [] # Seznam karet
     skore = 0
 
@@ -510,7 +513,7 @@ def obtiznost_menu():
 def hra(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, hrac_karty_list, dealer_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
     # Hraje se první partie a přičítá se kvůli tomu 1
     celkem_her += 1
@@ -519,17 +522,37 @@ def hra(balicek):
     
     balicek = michani(balicek) # Definuje hrací balíček pomocí funkce michani
 
-    # Hráč
-    hrac_karty_list, hrac_skore = rozdani_karet("hráč", 2, balicek) # Rozdání prvních dvou karet pro hráče
-    hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-    hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
-    zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+    if obtiznost == 1:
+        # Dealer
+        dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
+        dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
+        dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
+        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
 
-    # Dealer
-    dealer_karty_list, dealer_skore = rozdani_karet("dealer", 1, balicek) # Rozdání první karety
-    dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-    dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-    zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        # Hráč
+        hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet pro hráče
+        hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
+        hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
+        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+
+    else:
+        # Dealer
+        dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
+        dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
+        dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
+        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+
+        # Hráč
+        hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet pro hráče
+        hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
+        hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
+        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+
+        # Bot
+        bot_karty_list, bot_skore = rozdani_karet(2, balicek) # Rozdání první karety
+        bot_text = tk.Label(okno, text=f"({bot_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre bota
+        bot_text.place(x=10, y=345) # Zobrazí součet u bota
+        zobrazit_karty(bot_karty_list) # Zobrazí obrazky karet bota
     
     # Balanc a sázka
     balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
@@ -962,17 +985,17 @@ def hra_se_zbylymi_kartami(balicek):
         stat_btn.pack(padx=10, pady=20, side="bottom") # Zobrazení tlačítka pro statistiku 
 
     else:
-        # Hráč
-        hrac_karty_list, hrac_skore = rozdani_karet("hráč", 2, balicek) # Rozdání prvních dvou karet
-        hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
-        hrac_text.place(x=330 , y=345) # Zobrazí součet
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
-
         # Dealer
-        dealer_karty_list, dealer_skore = rozdani_karet("dealer", 1, balicek) # Rozdání první karety
+        dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
         dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
         dealer_text.place(x=330, y=35) # Zobrazí součet
         zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+
+        # Hráč
+        hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet
+        hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
+        hrac_text.place(x=330 , y=345) # Zobrazí součet
+        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
 
         # Balanc a sázka
         balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
