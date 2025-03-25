@@ -195,6 +195,9 @@ def stat():
         obce = 0
 
     if obce == 0:
+        konec_text = tk.Label(okno, text="Konec hry", font=("Arial", 30))
+        konec_text.pack(side="top", padx=10, pady=50)
+
         konec_btn = tk.Button(okno, text ="Konec", command=okno.quit)
         konec_btn.place(x=950, y=100) # Tlačítko pro ukončení hry
     else:
@@ -329,21 +332,21 @@ def pokracovani(balicek):
                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
         z5000.place(x=850, y=500) # Tlačítko pro vklad 5000 kreditů
 
-    hra_btn = tk.Button(okno, text="Jde se hrát!", command=lambda: hra_se_zbylymi_kartami(balicek))
-    hra_btn.pack(padx=10, pady=10, side="bottom") # Zobrazení tlačítka
+        hra_btn = tk.Button(okno, text="Jde se hrát!", command=lambda: hra_se_zbylymi_kartami(balicek))
+        hra_btn.pack(padx=10, pady=10, side="bottom") # Zobrazení tlačítka
 
-    zrus_btn = tk.Button(okno, text="Zrušit sázku", bg="palevioletred2", fg="black", command=lambda: (trakce(1),
-                                                                                                      balanc_text.config(text=f"Kredit: {int(balanc)}"), 
-                                                                                                      sazka_text.config(text=f"{int(mezi_vklad)}")))
-    zrus_btn.place(x=965, y=350) # Tlačítko pro zrušení sázky
+        zrus_btn = tk.Button(okno, text="Zrušit sázku", bg="palevioletred2", fg="black", command=lambda: (trakce(1),
+                                                                                                          balanc_text.config(text=f"Kredit: {int(balanc)}"), 
+                                                                                                          sazka_text.config(text=f"{int(mezi_vklad)}")))
+        zrus_btn.place(x=965, y=350) # Tlačítko pro zrušení sázky
 
-    all_btn = tk.Button(okno, text=" All-in", bg="cyan3", fg="black", command=lambda: (all_in(),
-                                                                                        balanc_text.config(text=f"Kredit: {int(balanc)}"), 
-                                                                                        sazka_text.config(text=f"{int(mezi_vklad)}")))
-    all_btn.place(x=1000, y=500) # Tlačítko pro All-in
+        all_btn = tk.Button(okno, text=" All-in", bg="cyan3", fg="black", command=lambda: (all_in(),
+                                                                                            balanc_text.config(text=f"Kredit: {int(balanc)}"), 
+                                                                                            sazka_text.config(text=f"{int(mezi_vklad)}")))
+        all_btn.place(x=1000, y=500) # Tlačítko pro All-in
 
-    zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
-    zpet_btn.place(x=950, y=100) # Tlačítko pro zpět do menu
+        zpet_btn = tk.Button(okno, text="Zpět do menu", command=obtiznost_menu)
+        zpet_btn.place(x=950, y=100) # Tlačítko pro zpět do menu
 
 # Vyplácení výher
 def vyplaceni():
@@ -477,6 +480,7 @@ def rozdani_karet(pocet_karet, balicek,):
 
 ######################### Bot záležitosti #########################
 
+# Zobrazení informací o botovi
 def bot():
     global bot_skore, bot_karty_list
     
@@ -522,7 +526,7 @@ def obtiznost_menu():
 
     obtiznost_hard = tk.Button(okno, text="Těžká", bg="red", fg="white", command=lambda: vklad(3)) # Tlačítko pro těžkou obtížnost
     info_hard = tk.Label(okno, text="- Pět balíčků karet (260)\n"
-"- Dva hráči navíc\n"
+"- Jeden hráč navíc\n"
 "- Výhra se násobí x1,5", font=("Arial", 13)) # Informace o těžké obtížnosti
     obtiznost_hard.place(x=840, y=150) # Zobrazení tlačítka
     info_hard.place(x=785, y=200) # Zobrazení informací
@@ -631,7 +635,7 @@ def hit(balicek):
 
         if obtiznost > 1: # Lízání karet pro bota
             while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
-                
+
                 karta = balicek.pop() # Vybere kartu z balíčku
                 bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
