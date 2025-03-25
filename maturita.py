@@ -164,7 +164,7 @@ def stat():
     global vyhra_nej, vyhra_kolik, vklad_nej, balanc, celkem_her
 
     # Label pro celkem odehraných her
-    celkem = tk.Label(okno, text=f"Hráli jste celkem................ {celkem_her} her", font=("Arial", 20))
+    celkem = tk.Label(okno, text=f"Hráli jste celkem................{celkem_her} her", font=("Arial", 20))
     celkem.pack()
 
     # Label pro celkový počet výher skrz obtížností
@@ -434,11 +434,13 @@ def zobrazit_karty(karty_list):
         vize = tk.Label(okno, image=img_tk) # Vytvoření labelu s obrázkem
         vize.image = img_tk # Přiřazení obrázku k labelu
         image_labels.append(vize) # Přidání labelu do listu
+
         if obtiznost == 1: # Pokud je obtížnost 1 (lehká)
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=330 + 45 * hrac_karty_list.index(karta), y=380) # Zobrazí karty hráče
             else: # Pokud se jedná o karty dealera
                 vize.place(x=330 + 45 * dealer_karty_list.index(karta), y=70) # Zobrazí karty dealera
+
         else: # Pokud je obtížnost střední nebo težká
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=430 + 45 * hrac_karty_list.index(karta), y=380) # Zobrazí karty hráče
@@ -635,7 +637,6 @@ def hit(balicek):
 
         if obtiznost > 1: # Lízání karet pro bota
             while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
-
                 karta = balicek.pop() # Vybere kartu z balíčku
                 bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
