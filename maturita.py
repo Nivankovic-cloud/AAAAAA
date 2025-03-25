@@ -23,8 +23,7 @@ pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_prav
 konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
 
 ######################### Globální promněné #########################
-# Hodnota je nastavena na 1 kvůli počítaní procenta. Kdyby někdo šel na statistiku bez odehrání jediné hry, tak dělím nulou a systém se rozpadá.
-celkem_her = 1
+celkem_her = 0
 
 vyhra_nej = 0
 vklad_nej = 0
@@ -165,15 +164,19 @@ def stat():
     global vyhra_nej, vyhra_kolik, vklad_nej, balanc, celkem_her
 
     # Label pro celkem odehraných her
-    celkem = tk.Label(okno, text=f"Hráli jste celkem................ {celkem_her-1} her", font=("Arial", 20))
+    celkem = tk.Label(okno, text=f"Hráli jste celkem................ {celkem_her} her", font=("Arial", 20))
     celkem.pack()
 
     # Label pro celkový počet výher skrz obtížností
     vyhra = tk.Label(okno, text=f"Vyhrali jste................{vyhra_kolik}x", font=("Arial", 20))
     vyhra.pack()
 
-    # Výpočet procenta, odečítám 1 z důvodu, že začáteční hodnota celkem_her začína na 1 
-    pro_h = (vyhra_kolik / celkem_her) * 100
+    # Výpočet procenta
+    if celkem_her == 0: # Pokus není odehraná ani jedna hra tak se celkový počet her dělí 1
+        pro_h = (vyhra_kolik / 1) * 100
+    else: # Pro ostatní případy se procento počítá jakož to kolik krát hráč vyhrál děleno celkovým počtem her
+        pro_h = (vyhra_kolik / celkem_her) * 100
+    
     procento = tk.Label(okno, text=f"Procentuálně jste vyhrál................{int(pro_h)} %", font=("Arial", 20))
     procento.pack()
 
@@ -485,8 +488,6 @@ def bot():
     bot_nazev = tk.Label(okno, text="(Bot Tom)", bg="black", fg="white", font=("Arial", 14))
     bot_nazev.place(x=50 , y=560)
 
-
-
 ######################### Hlavní funkce hry #########################
 
 # Menu pro výběr obtížnosti
@@ -556,7 +557,6 @@ def hra(balicek):
     # Hráč
     hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet pro hráče
     hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-    hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
     zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
 
     if obtiznost == 1:
@@ -630,7 +630,6 @@ def hit(balicek):
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
         zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
@@ -763,8 +762,15 @@ def double(balicek):
 def stand(balicek):
     okeno()
 
-    global dealer_skore, vyhra_dealer, vyhra_hrac, obtiznost, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, obtiznost, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
     
+    while bot_skore > 2 and bot_skore < 19:
+        karta = balicek.pop() # Vybere kartu z balíčku
+        bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
+        bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráče
+
+
+
     if hrac_skore < dealer_skore:
         okeno()
 
@@ -1103,8 +1109,6 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
         skore.place(x=950, y=40) # Zobrazí celkové skóre
 
 ######################### Vykreslování okna #########################
-
-
 
 zobraz_menu()
 okno.mainloop()
