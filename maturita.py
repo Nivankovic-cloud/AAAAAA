@@ -1104,5 +1104,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 
 ######################### Vykreslování okna #########################
 
+
+
 zobraz_menu()
 okno.mainloop()
