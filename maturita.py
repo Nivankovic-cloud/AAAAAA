@@ -635,6 +635,35 @@ def hit(balicek):
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
+        hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
+        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+
+        dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
+        dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
+        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+
+        if obtiznost == 1:
+            hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
+        else:
+            hrac_text.place(x=430 , y=345) # Zobrazí součet u bota
+            bot() # Pro načtení informací pro bota
+
+        # Balanc a sázka
+        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text.place(x=10, y=10)
+
+        # Žetony
+        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
+        sazka_text.place(x=950, y=450)
+
+        if mezi_vklad > vklad_nej:
+            vklad_nej = mezi_vklad
+
+        mezi_vklad = 0
+
+        okno.update() # Aktualizuje okno
+        time.sleep(1) # Čeká 1 sekundu
+
         if obtiznost > 1: # Lízání karet pro bota
             while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
                 karta = balicek.pop() # Vybere kartu z balíčku
@@ -644,11 +673,11 @@ def hit(balicek):
                 okeno()
 
                 # Hráč
-                hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
+                hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
                 zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet
 
                 # Dealer
-                dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
+                dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
                 dealer_text.place(x=330, y=35) # Zobrazí součet
                 zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet
 
@@ -676,32 +705,6 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 
                 okno.update() # Aktualizuje okno
                 time.sleep(1) # Čeká 1 sekundu
-
-        hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
-
-        dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
-        dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
-
-        if obtiznost == 1:
-            hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
-        else:
-            hrac_text.place(x=430 , y=345) # Zobrazí součet u bota
-            bot() # Pro načtení informací pro bota
-
-        # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
-        balanc_text.place(x=10, y=10)
-
-        # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
-
-        if mezi_vklad > vklad_nej:
-            vklad_nej = mezi_vklad
-
-        mezi_vklad = 0
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
