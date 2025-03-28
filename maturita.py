@@ -8,7 +8,7 @@ okno = tk.Tk()
 okno.title("Blackjack")
 okno.geometry("1200x720")
 okno.resizable(False, False)
-okno.configure(bg="green")
+okno.configure(bg="darkgreen")
 
 # List to keep track of image labels
 image_labels = []
