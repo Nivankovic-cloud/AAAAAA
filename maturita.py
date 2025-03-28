@@ -49,12 +49,10 @@ vyhra_bot = 0
 ######################### Balíček #########################
 
 # Balíček karet
-#puvodni_balicek = ["2♧","3♧","4♧","5♧","6♧","7♧","8♧","9♧","10♧","J♧","Q♧","K♧","A♧",
-#                    "2♤","3♤","4♤","5♤","6♤","7♤","8♤","9♤","10♤","J♤","Q♤","K♤","A♤",
-#                    "2♡","3♡","4♡","5♡","6♡","7♡","8♡","9♡","10♡","J♡","Q♡","K♡","A♡",
-#                    "2♢","3♢","4♢","5♢","6♢","7♢","8♢","9♢","10♢","J♢","Q♢","K♢","A♢"]
-
-puvodni_balicek = ["2♧","3♧","2♤","3♤","2♡","3♡","2♢","3♢"]
+puvodni_balicek = ["2♧","3♧","4♧","5♧","6♧","7♧","8♧","9♧","10♧","J♧","Q♧","K♧","A♧",
+                    "2♤","3♤","4♤","5♤","6♤","7♤","8♤","9♤","10♤","J♤","Q♤","K♤","A♤",
+                    "2♡","3♡","4♡","5♡","6♡","7♡","8♡","9♡","10♡","J♡","Q♡","K♡","A♡",
+                    "2♢","3♢","4♢","5♢","6♢","7♢","8♢","9♢","10♢","J♢","Q♢","K♢","A♢"]
 
 balicek = []
 
@@ -403,7 +401,7 @@ def trakce(hodnota):
     else: # V jiném případě vyskoči varování
         varov = tk.Label(okno, text="Nemůžeš víc vsadit, nemáš dostatečný balanc", bg="red2", fg="white", font=("Arial", 20))
         varov.pack(pady=250)
-        okno.after(1500, varov.pack_forget)
+        okno.after(1000, varov.pack_forget)
         
     if hodnota == 1:
         balanc += mezi_vklad
@@ -546,6 +544,11 @@ def obtiznost_menu():
 # Hra
 def hra(balicek):
     okeno()
+
+    test_text = tk.Label(okno, text="Hráč je na tahu", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
+    test_text.place(x=690, y=255) # Zobrazí nápis
+
+    okno.after(5000, test_text.place_forget)
 
     global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
@@ -819,12 +822,14 @@ def stand(balicek):
     
     if obtiznost > 1:
         while bot_skore > 2 and bot_skore < 19: # Lízání karet pro bota
-
             karta = balicek.pop() # Vybere kartu z balíčku
             bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
             bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
             okeno()
+
+            test_text = tk.Label(okno, text="Bot hraje", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
+            test_text.place(x=690, y=255) # Zobrazí nápis
         
             # Hráč
             hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
@@ -906,8 +911,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             karta = balicek.pop() # Vybere kartu z balíčku
             dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
             dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
-        
+
             okeno()
+
+            test_text = tk.Label(okno, text="Dealer hraje", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
+            test_text.place(x=690, y=255) # Zobrazí nápis
         
             # Hráč
             hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
@@ -1142,13 +1150,19 @@ def hra_se_zbylymi_kartami(balicek):
         upozorneni = tk.Label(okno, text="V balíčku zbývá méně jak 10 karet, chce jej znova zmíchat?", font=("Arial", 14)) # Vytvoří label s upozorněním
         upozorneni.pack(padx=10, pady=10) # Zobrazí upozornění
 
-        michani_btn = tk.Button(okno, text="Zamíchat", command=lambda: okno.after(1500, hra(obtiznost))) # Nadpis
+        michani_btn = tk.Button(okno, text="Zamíchat", command=lambda: okno.after(750, hra(obtiznost))) # Nadpis
         michani_btn.pack(padx=10, pady=20) # Zobrazení tlačítka pro míchání 
 
         stat_btn = tk.Button(okno, text="Statistika", command=lambda: stat())
         stat_btn.pack(padx=10, pady=20, side="bottom") # Zobrazení tlačítka pro statistiku 
 
     else:
+
+        test_text = tk.Label(okno, text="Hráč je na tahu", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
+        test_text.place(x=690, y=255) # Zobrazí nápis
+
+        okno.after(5000, test_text.place_forget)
+
         # Dealer
         dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
         dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
