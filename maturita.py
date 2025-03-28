@@ -865,7 +865,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             okno.update() # Aktualizuje okno
             time.sleep(1) # Čeká 1 sekundu
 
-    if hrac_skore < dealer_skore:
+    if hrac_skore < dealer_skore and bot_skore < dealer_skore:
         okeno()
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
