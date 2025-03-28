@@ -49,10 +49,12 @@ vyhra_bot = 0
 ######################### Balíček #########################
 
 # Balíček karet
-puvodni_balicek = ["2♧","3♧","4♧","5♧","6♧","7♧","8♧","9♧","10♧","J♧","Q♧","K♧","A♧",
-                    "2♤","3♤","4♤","5♤","6♤","7♤","8♤","9♤","10♤","J♤","Q♤","K♤","A♤",
-                    "2♡","3♡","4♡","5♡","6♡","7♡","8♡","9♡","10♡","J♡","Q♡","K♡","A♡",
-                    "2♢","3♢","4♢","5♢","6♢","7♢","8♢","9♢","10♢","J♢","Q♢","K♢","A♢"]
+#puvodni_balicek = ["2♧","3♧","4♧","5♧","6♧","7♧","8♧","9♧","10♧","J♧","Q♧","K♧","A♧",
+#                    "2♤","3♤","4♤","5♤","6♤","7♤","8♤","9♤","10♤","J♤","Q♤","K♤","A♤",
+#                    "2♡","3♡","4♡","5♡","6♡","7♡","8♡","9♡","10♡","J♡","Q♡","K♡","A♡",
+#                    "2♢","3♢","4♢","5♢","6♢","7♢","8♢","9♢","10♢","J♢","Q♢","K♢","A♢"]
+
+puvodni_balicek = ["2♧","3♧","2♤","3♤","2♡","3♡","2♢","3♢"]
 
 balicek = []
 
@@ -427,7 +429,7 @@ def zobrazit_karty(karty_list):
 
     # Zobrazení karet lícema nahoru
     # Pro každou kartu, která se nachází v seznamu karet a bude hraná
-    for karta in karty_list:
+    for index, karta in enumerate(karty_list): # Pro každou kartu v seznamu karty_list se získá její index (pozice v seznamu) a hodnota
         img = Image.open(obrazky[karta]) # Otevření obrázku
         img = img.resize((110, 165), Image.LANCZOS) # Změna velikosti obrázku
         img_tk = ImageTk.PhotoImage(img) # Převedení obrázku do formátu, který tkinter může zobrazit
@@ -437,17 +439,17 @@ def zobrazit_karty(karty_list):
 
         if obtiznost == 1: # Pokud je obtížnost 1 (lehká)
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
-                vize.place(x=330 + 45 * hrac_karty_list.index(karta), y=380) # Zobrazí karty hráče
+                vize.place(x=330 + 40 * index, y=380) # Zobrazí karty hráče
             else: # Pokud se jedná o karty dealera
-                vize.place(x=330 + 45 * dealer_karty_list.index(karta), y=70) # Zobrazí karty dealera
+                vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
 
         else: # Pokud je obtížnost střední nebo težká
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
-                vize.place(x=430 + 45 * hrac_karty_list.index(karta), y=380) # Zobrazí karty hráče
+                vize.place(x=430 + 40 * index, y=380) # Zobrazí karty hráče
             elif karty_list == dealer_karty_list: # Pokud se jedná o karty dealera
-                vize.place(x=330 + 45 * dealer_karty_list.index(karta), y=70) # Zobrazí karty dealera
+                vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
             else: # Karty bota
-                vize.place(x=50 + 45 * bot_karty_list.index(karta), y=380) # Zobrazí karty Bota
+                vize.place(x=50 + 40 * index, y=380) # Zobrazí karty Bota
 
     # Zobrazení karty lícem dolů - estetický důvod
     zadni_img = Image.open("poker back /card back blue.png") # Otevření obrázku pro zadní stranu karty
