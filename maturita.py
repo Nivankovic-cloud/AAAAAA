@@ -130,32 +130,66 @@ def zobraz_menu():
     moznosti.pack(padx=10, pady=65) # Definuje možnosti
 
     zacatek_btn = tk.Button(moznosti, text ="Začátek hry", command=lambda: obtiznost_menu())
-    zacatek_btn.pack(padx=10, pady=15) # Tlačítko pro začátek hry
+    zacatek_btn.pack(padx=10, pady=20) # Tlačítko pro začátek hry
     pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_pravidla())
-    pravidla_btn.pack(padx=10, pady=15) # Tlačítko pro zobrazení pravidel
+    pravidla_btn.pack(padx=10, pady=20) # Tlačítko pro zobrazení pravidel
     konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
-    konec_btn.pack(padx=10, pady=15) # Tlačítko pro ukončení hry
+    konec_btn.pack(padx=10, pady=20) # Tlačítko pro ukončení hry
 
 # Pravidla hry
 def zobraz_pravidla():
     okeno()
     
     # Zobrazit pravidla
-    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku:", font=("Arial", 25)) # Nadpis
+    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku:", bg="darkgreen", fg="#FCE6C9", font=("Arial", 25)) # Nadpis
     pravidla_nadpis.pack(padx=10, pady=10) # Zobrazení nadpisu
 
-    pravidla_text = tk.Label(okno, text="""1. Cílem je dostat se co nejblíže k 21, aniž byste překročili tuto hodnotu.
-2. Číselné karty mají hodnotu podle své nominální hodnoty.
-3. Obrázkové karty (Král, Královna, Kluk) mají hodnotu 10.
-4. Eso může mít hodnotu 11 nebo 1.
-5. Můžete 'Táhnout' (Hit) další kartu nebo 'Stát' (Stand) a ponechat si svůj aktuální součet.
-6. Dealer musí táhnout, dokud nedosáhne 17 nebo více.
-7. Pokud překročíte 21, prohrajete a končíte.""", font=("Arial", 14)) # Text pravidel
-    pravidla_text.pack()
+    frame = tk.Frame(okno, bg="darkgreen")
+    frame.pack(padx=10, pady=80)
+
+    prom = tk.Label(frame, text="""1. Cíl hry
+Cílem je mít na ruce součet blíže k hodnotě 21 než dealer,
+aniž bys překročil tuto hodnotu (tzv. "přebití" neboli bust).""", font=("Arial", 20)) # Nadpis
+    prom.pack()
+    
+    btn1 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""2. Hodnota karet
+Karty 2–10  mají svou nominální hodnotu.
+J, Q, K (kluk, dáma, král) mají hodnotu 10.
+Eso (A) má hodnotu 1 nebo 11, podle toho, co je pro hráče výhodnější."""), btn2.place(x=1000, y=625)))
+    btn1.place(x=1000, y=625)
+
+    btn2 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""3. Průběh hry
+Každý hráč dostane dvě otevřené karty.
+Dealer dostane jednu otevřenou kartu a jednu zakrytou (tzv. "hole card").
+Hráči se střídají a rozhodují, jak budou pokračovat."""), btn3.place(x=1000, y=625)))
+    
+    btn3 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""4. Možnosti hráče
+Stát (Stand): Ukončit tah a nepožadovat další karty.
+Táhnout (Hit): Vzít si další kartu. Toto se opakuje, dokud hráč nestojí nebo nepřebije.
+Double Down (zdvojnásobení sázky):  Vsadit dvojnásobek původní sázky a vzít si právě jednu kartu."""), btn4.place(x=1000, y=625)))
+    
+    btn4 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""5. Dealerovy pravidla
+Dealer musí táhnout (hit), dokud nemá součet alespoň 17.
+Pokud dealer přebije (bust), všichni zbývající hráči vyhrávají.
+Dealer nesmí double down, split ani surrender."""), btn5.place(x=1000, y=625)))
+
+    btn5 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""6. Speciální situace
+Push: Pokud hráč i dealer skončí se stejným součtem, jedná se o remízu a sázka se vrací."""), btn6.place(x=1000, y=625)))
+
+    btn6 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""7. Výplaty
+Výhra v jednoduchém režimu: Pokud hráč porazí dealera, vyhrává 2,5 krát to co vsadil
+                   (např. sázka 100 = výhra 250 -> 100 je ze sázky a 150 jste vydělali)
+
+Výhra v normálním režimu: Pokud hráč porazí dealera, vyhrává 2 krát to co vsadil
+                   (např. sázka 100 = výhra 200 -> 100 je ze sázky a 100 je výhra)
+
+Výhra v těžkém režimu: Pokud hráč porazí dealera, vyhrává 1,5 krát to co vsadil
+                   (např. sázka 100 = výhra 150 -> 100 je ze sázky a 50 jste vyhráli)
+
+Přebití:  Pokud hráč přebije 21, prohrává automaticky."""), zpet_btn.place(x=1000, y=625)))
     
     # Tlačítko pro návrat do menu
     zpet_btn = tk.Button(okno, text="Zpět", command=zobraz_menu)
-    zpet_btn.pack(padx=10, pady=10)
 
 # Zobrazení statistiky
 def stat():
