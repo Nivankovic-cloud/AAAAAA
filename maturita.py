@@ -361,20 +361,20 @@ def vyplaceni():
             vyhra = mezi_vklad * 2.5
             balanc += vyhra
             
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
+            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+            sazka_text.place(x=10, y=50)
     elif obtiznost == 2: # Vyplácení kreditů ve střední hře
             vyhra = mezi_vklad * 2
             balanc += vyhra
 
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
+            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+            sazka_text.place(x=10, y=50)
     else: # Vyplácení kreditů v těžké hře
             vyhra = mezi_vklad * 1.5
             balanc += vyhra
 
-            sazka_text = tk.Label(okno, text=f"Vyhráváš +{int(vyhra)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=850, y=450)
+            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+            sazka_text.place(x=10, y=50)
 
     # Porovnávání největších výher a sázek
     if mezi_vklad > vklad_nej:
@@ -583,10 +583,10 @@ def hra(balicek):
         bot() # Pro načtení informací pro bota
     
     # Balanc a sázka
-    balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+    balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
     balanc_text.place(x=10, y=10)
-    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-    sazka_text.place(x=950, y=450)
+    sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+    sazka_text.place(x=10, y=50)
 
     # Kontrola 2x, aby se nemohlo sázet 2x i když na to nemáte kredit
     if mezi_vklad * 2 > balanc: # Pokud dvojnásobek sázky je větší jak celkový počet kreditů nevygeneruje tlačítko double
@@ -634,10 +634,10 @@ def hit(balicek):
         bot() # Pro načtení informací pro bota
 
     # Balanc a sázka
-    balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+    balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
     balanc_text.place(x=10, y=10)
-    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-    sazka_text.place(x=950, y=450)
+    sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+    sazka_text.place(x=10, y=50)
 
     if hrac_skore > 21: # Pokud hráč má více než 21
         okeno()
@@ -656,12 +656,12 @@ def hit(balicek):
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Ztrácíš: - {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
@@ -692,10 +692,10 @@ def hit(balicek):
                     bot() # Pro načtení informací pro bota
 
                 # Balanc a sázka
-                balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+                balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
                 balanc_text.place(x=10, y=10)
-                sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-                sazka_text.place(x=950, y=450)
+                sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+                sazka_text.place(x=10, y=50)
 
                 # Kolik karet zbývá v balíčku
                 zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -733,10 +733,10 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
                     bot() # Pro načtení informací pro bota
 
                 # Balanc a sázka
-                balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+                balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
                 balanc_text.place(x=10, y=10)
-                sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-                sazka_text.place(x=950, y=450)
+                sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+                sazka_text.place(x=10, y=50)
 
                 # Kolik karet zbývá v balíčku
                 zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -767,12 +767,12 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Ztrácíš: - {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -830,10 +830,10 @@ def double(balicek):
         bot() # Pro načtení informací pro bota
 
     # Balanc a sázka
-    balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+    balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
     balanc_text.place(x=10, y=10)
-    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-    sazka_text.place(x=950, y=450)
+    sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+    sazka_text.place(x=10, y=50)
 
     if hrac_skore > 21:
         okeno()
@@ -854,12 +854,12 @@ def double(balicek):
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Ztrácíš: - {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -910,10 +910,10 @@ def stand(balicek):
                 bot() # Pro načtení informací pro bota
 
             # Balanc a sázka
-            balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+            balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
             balanc_text.place(x=10, y=10)
-            sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=950, y=450)
+            sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+            sazka_text.place(x=10, y=50)
         
             # Kolik karet zbývá v balíčku
             zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -945,10 +945,10 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
         bot() # Pro načtení informací pro bota
 
     # Balanc a sázka
-    balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+    balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
     balanc_text.place(x=10, y=10)
-    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-    sazka_text.place(x=950, y=450)
+    sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+    sazka_text.place(x=10, y=50)
 
     # Kolik karet zbývá v balíčku
     zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -983,12 +983,12 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Ztrácíš: - {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -1029,10 +1029,10 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
                 bot() # Pro načtení informací pro bota
 
             # Balanc a sázka
-            balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+            balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
             balanc_text.place(x=10, y=10)
-            sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-            sazka_text.place(x=950, y=450)
+            sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+            sazka_text.place(x=10, y=50)
         
             # Kolik karet zbývá v balíčku
             zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -1061,10 +1061,10 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
-        sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+        sazka_text.place(x=10, y=50)
 
         # Kolik karet zbývá v balíčku
         zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
@@ -1095,7 +1095,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
@@ -1131,7 +1131,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
@@ -1167,12 +1167,12 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        sazka_text = tk.Label(okno, text=f"- {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Ztrácíš: - {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -1206,12 +1206,12 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
 
         # Žetony
-        remiza_text = tk.Label(okno, text=f"Vrací se ti: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        remiza_text.place(x=750, y=450)
+        remiza_text = tk.Label(okno, text=f"Vrací se: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 25))
+        remiza_text.place(x=10, y=50)
 
         balanc += mezi_vklad
 
@@ -1271,10 +1271,10 @@ def hra_se_zbylymi_kartami(balicek):
             bot() # Pro načtení informací pro bota
 
         # Balanc a sázka
-        balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+        balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
         balanc_text.place(x=10, y=10)
-        sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
-        sazka_text.place(x=950, y=450)
+        sazka_text = tk.Label(okno, text=f"Vsazeno: {int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 17))
+        sazka_text.place(x=10, y=50)
 
         # Tlačítka pro Hit a Stand i Double
         if mezi_vklad * 2 > balanc:
