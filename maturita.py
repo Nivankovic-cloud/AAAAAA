@@ -10,19 +10,19 @@ okno.geometry("1200x720")
 okno.resizable(False, False)
 okno.configure(bg="darkgreen")
 
-# List to keep track of image labels
-image_labels = []
-
 # Nadpis
-nadpis = tk.Label(okno, text="Blackjack", font=("Arial", 64))
+nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69))
 
 # Tlačítka v hlavním menu
-moznosti = tk.Frame(okno) 
+moznosti = tk.Frame(okno, bg="darkgreen") 
 zacatek_btn = tk.Button(moznosti, text ="Začátek hry", command=lambda: obtiznost_menu()) 
 pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_pravidla()) 
 konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
 
 ######################### Globální promněné #########################
+# Seznam pro sledování štítků s obrázky
+image_labels = []
+
 celkem_her = 0
 
 vyhra_nej = 0
@@ -131,11 +131,11 @@ def zobraz_menu():
     okeno() 
     
     # Vytvoření menu
-    nadpis.pack(padx=10, pady=10) # Generuje nadpis
-    moznosti.pack() # Definuje možnosti
-    zacatek_btn.pack(padx=10, pady=10) # Tlačítko pro začátek hry
-    pravidla_btn.pack(padx=10, pady=10) # Tlačítko pro zobrazení pravidel
-    konec_btn.pack(padx=10, pady=10) # Tlačítko pro ukončení hry
+    nadpis.pack(padx=10, pady=75) # Generuje nadpis
+    moznosti.pack(padx=10, pady=65) # Definuje možnosti
+    zacatek_btn.pack(padx=10, pady=15) # Tlačítko pro začátek hry
+    pravidla_btn.pack(padx=10, pady=15) # Tlačítko pro zobrazení pravidel
+    konec_btn.pack(padx=10, pady=15) # Tlačítko pro ukončení hry
 
 # Pravidla hry
 def zobraz_pravidla():
