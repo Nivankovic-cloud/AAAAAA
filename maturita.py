@@ -10,15 +10,6 @@ okno.geometry("1200x720")
 okno.resizable(False, False)
 okno.configure(bg="darkgreen")
 
-# Nadpis
-nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69))
-
-# Tlačítka v hlavním menu
-moznosti = tk.Frame(okno, bg="darkgreen") 
-zacatek_btn = tk.Button(moznosti, text ="Začátek hry", command=lambda: obtiznost_menu()) 
-pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_pravidla()) 
-konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
-
 ######################### Globální promněné #########################
 # Seznam pro sledování štítků s obrázky
 image_labels = []
@@ -128,13 +119,21 @@ def okeno():
 
 # Úvodní menu
 def zobraz_menu():
-    okeno() 
-    
-    # Vytvoření menu
+    okeno()
+
+    # Nadpis
+    nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69))
     nadpis.pack(padx=10, pady=75) # Generuje nadpis
+
+    # Tlačítka v hlavním menu
+    moznosti = tk.Frame(okno, bg="darkgreen")
     moznosti.pack(padx=10, pady=65) # Definuje možnosti
+
+    zacatek_btn = tk.Button(moznosti, text ="Začátek hry", command=lambda: obtiznost_menu())
     zacatek_btn.pack(padx=10, pady=15) # Tlačítko pro začátek hry
+    pravidla_btn = tk.Button(moznosti, text ="Pravidla", command=lambda: zobraz_pravidla())
     pravidla_btn.pack(padx=10, pady=15) # Tlačítko pro zobrazení pravidel
+    konec_btn = tk.Button(moznosti, text ="Konec", command=okno.quit)
     konec_btn.pack(padx=10, pady=15) # Tlačítko pro ukončení hry
 
 # Pravidla hry
@@ -142,7 +141,9 @@ def zobraz_pravidla():
     okeno()
     
     # Zobrazit pravidla
-    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku:\n", font=("Arial", 20)) # Nadpis
+    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku:", font=("Arial", 25)) # Nadpis
+    pravidla_nadpis.pack(padx=10, pady=10) # Zobrazení nadpisu
+
     pravidla_text = tk.Label(okno, text="""1. Cílem je dostat se co nejblíže k 21, aniž byste překročili tuto hodnotu.
 2. Číselné karty mají hodnotu podle své nominální hodnoty.
 3. Obrázkové karty (Král, Královna, Kluk) mají hodnotu 10.
@@ -150,8 +151,7 @@ def zobraz_pravidla():
 5. Můžete 'Táhnout' (Hit) další kartu nebo 'Stát' (Stand) a ponechat si svůj aktuální součet.
 6. Dealer musí táhnout, dokud nedosáhne 17 nebo více.
 7. Pokud překročíte 21, prohrajete a končíte.""", font=("Arial", 14)) # Text pravidel
-    pravidla_nadpis.pack(padx=10, pady=10) # Zobrazení nadpisu
-    pravidla_text.pack(padx=10, pady=50) # Zobrazení textu
+    pravidla_text.pack()
     
     # Tlačítko pro návrat do menu
     zpet_btn = tk.Button(okno, text="Zpět", command=zobraz_menu)
