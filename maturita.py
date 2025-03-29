@@ -422,7 +422,7 @@ def hodnota_karty(karta, skore):
         return int(karta)
 
 # Zobrazit karty
-def zobrazit_karty(karty_list):
+def zobrazit_karty(karty_list, opt):
     global obtiznost
 
     # Zobrazení karet lícema nahoru
@@ -435,28 +435,41 @@ def zobrazit_karty(karty_list):
         vize.image = img_tk # Přiřazení obrázku k labelu
         image_labels.append(vize) # Přidání labelu do listu
 
+        # Zobrazení karty lícem dolů - estetický důvod
+        zadni_img = Image.open("poker back /card back blue.png") # Otevření obrázku pro zadní stranu karty
+        zadni_img = zadni_img.resize((110, 165), Image.LANCZOS) # Změna velikosti obrázku
+        zadni_img_tk = ImageTk.PhotoImage(zadni_img) # Převedení obrázku do formátu, který tkinter může zobrazit
+        zadni = tk.Label(okno, image=zadni_img_tk) # Vytvoření labelu s obrázkem
+        zadni.image = zadni_img_tk # Přiřazení obrázku k labelu
+        image_labels.append(zadni) # Přidání labelu do listu
+        zadni.place(x=1050, y=35) # Zobrazí zadní stranu karty v okně
+
         if obtiznost == 1: # Pokud je obtížnost 1 (lehká)
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=330 + 40 * index, y=380) # Zobrazí karty hráče
             else: # Pokud se jedná o karty dealera
-                vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
+                if opt == True:
+                    if index == 1:
+                        zadni.place(x=330 + 40, y=70)
+                    else:
+                        vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
+                else:
+                    vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
 
         else: # Pokud je obtížnost střední nebo težká
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=430 + 40 * index, y=380) # Zobrazí karty hráče
             elif karty_list == dealer_karty_list: # Pokud se jedná o karty dealera
-                vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
+                if opt == True:
+                    if index == 1:
+                        zadni.place(x=330 + 40, y=70)
+                    else:
+                        vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
+                else:
+                    vize.place(x=330 + 40 * index, y=70) # Zobrazí karty dealera
             else: # Karty bota
                 vize.place(x=50 + 40 * index, y=380) # Zobrazí karty Bota
 
-    # Zobrazení karty lícem dolů - estetický důvod
-    zadni_img = Image.open("poker back /card back blue.png") # Otevření obrázku pro zadní stranu karty
-    zadni_img = zadni_img.resize((110, 165), Image.LANCZOS) # Změna velikosti obrázku
-    zadni_img_tk = ImageTk.PhotoImage(zadni_img) # Převedení obrázku do formátu, který tkinter může zobrazit
-    zadni = tk.Label(okno, image=zadni_img_tk) # Vytvoření labelu s obrázkem
-    zadni.image = zadni_img_tk # Přiřazení obrázku k labelu
-    image_labels.append(zadni) # Přidání labelu do listu
-    zadni.place(x=1050, y=35) # Zobrazí zadní stranu karty v okně
 
 # Zamíchání balíčku
 def michani(obt):
@@ -489,7 +502,7 @@ def bot():
     # Bot
     bot_text = tk.Label(okno, text=f"({bot_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre bota
     bot_text.place(x=50, y=345) # Zobrazí součet u bot
-    zobrazit_karty(bot_karty_list)
+    zobrazit_karty(bot_karty_list, 1)
 
     bot_nazev = tk.Label(okno, text="(Bot Tom)", bg="black", fg="white", font=("Arial", 14))
     bot_nazev.place(x=50 , y=560)
@@ -545,11 +558,6 @@ def obtiznost_menu():
 def hra(balicek):
     okeno()
 
-    test_text = tk.Label(okno, text="Hráč je na tahu", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
-    test_text.place(x=690, y=255) # Zobrazí nápis
-
-    okno.after(5000, test_text.place_forget)
-
     global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
     # Hraje se první partie a přičítá se kvůli tomu 1
@@ -559,15 +567,15 @@ def hra(balicek):
     balicek = michani(balicek) # Definuje hrací balíček pomocí funkce michani
 
     # Dealer
-    dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
+    dealer_karty_list, dealer_skore = rozdani_karet(2, balicek) # Rozdání první karety
     dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
     dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-    zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+    zobrazit_karty(dealer_karty_list, True) # Zobrazí obrazky karet dealera
 
     # Hráč
     hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet pro hráče
     hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-    zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     if obtiznost == 1:
         hrac_text.place(x=330 , y=345)
@@ -617,11 +625,11 @@ def hit(balicek):
     
     hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
     hrac_text.config(text=f"({hrac_skore})")
-    zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
     dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-    zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+    zobrazit_karty(dealer_karty_list, True) # Zobrazí obrazky karet dealera
 
     if obtiznost == 1:
         hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -641,11 +649,11 @@ def hit(balicek):
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -679,12 +687,12 @@ def hit(balicek):
 
                 # Hráč
                 hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
-                zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet
+                zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet
 
                 # Dealer
                 dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
                 dealer_text.place(x=330, y=35) # Zobrazí součet
-                zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet
+                zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
 
                 if obtiznost == 1:
                     hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -749,11 +757,11 @@ def double(balicek):
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
     hrac_skore += hodnota_karty(karta, hrac_skore) # Přičte hodnotu karty k celkovému skóre hráče
     hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-    zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
     dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-    zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+    zobrazit_karty(dealer_karty_list, True) # Zobrazí obrazky karet dealera
 
     if obtiznost == 1:
         hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -773,11 +781,11 @@ def double(balicek):
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -802,7 +810,7 @@ def double(balicek):
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -819,7 +827,7 @@ def stand(balicek):
     okeno()
 
     global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, obtiznost, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
-    
+
     if obtiznost > 1:
         while bot_skore > 2 and bot_skore < 19: # Lízání karet pro bota
             karta = balicek.pop() # Vybere kartu z balíčku
@@ -827,18 +835,15 @@ def stand(balicek):
             bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
             okeno()
-
-            test_text = tk.Label(okno, text="Bot hraje", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
-            test_text.place(x=690, y=255) # Zobrazí nápis
         
             # Hráč
             hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
-            zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet
+            zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet
 
             # Dealer
             dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
             dealer_text.place(x=330, y=35) # Zobrazí součet
-            zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet
+            zobrazit_karty(dealer_karty_list, True) # Zobrazí obrazky karet
 
             if obtiznost == 1:
                 hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -865,17 +870,53 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             okno.update() # Aktualizuje okno
             time.sleep(1) # Čeká 1 sekundu
 
+    ### Pro otočení druhé karty dealera ###
+    # Hráč
+    hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
+    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet
+
+    # Dealer
+    dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
+    dealer_text.place(x=330, y=35) # Zobrazí součet
+    zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+    if obtiznost == 1:
+        hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
+    else:
+        hrac_text.place(x=430 , y=345) # Zobrazí součet u bota
+        bot() # Pro načtení informací pro bota
+
+    # Balanc a sázka
+    balanc_text = tk.Label(okno, text=f"Balanc: {int(balanc)}", bg="navy", fg="white", font=("Arial", 20))
+    balanc_text.place(x=10, y=10)
+    sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="silver", fg="black", font=("Arial", 20))
+    sazka_text.place(x=950, y=450)
+
+    # Kolik karet zbývá v balíčku
+    zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+    ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
+    ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčk
+
+    # Vytvoří label s celkovým skóre, kdo vyhrával kolik her
+    skore = tk.Label(okno, text=f"""Dealer: {vyhra_dealer}
+Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skóre, kdo vyhrával kolik her
+    skore.place(x=950, y=40) # Zobrazí celkové skóre
+
+    okno.update()
+    time.sleep(1)
+    ######
+
     if hrac_skore < dealer_skore and bot_skore < dealer_skore:
         okeno()
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -900,7 +941,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -913,18 +954,15 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
 
             okeno()
-
-            test_text = tk.Label(okno, text="Dealer hraje", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
-            test_text.place(x=690, y=255) # Zobrazí nápis
         
             # Hráč
             hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
-            zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet
+            zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet
 
             # Dealer
             dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
             dealer_text.place(x=330, y=35) # Zobrazí součet
-            zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet
+            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
 
             if obtiznost == 1:
                 hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -952,11 +990,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
             time.sleep(1) # Čeká 1 sekundu
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -986,11 +1024,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         vyhra_hrac += 1 # Přičte se hráči bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - VYHRÁL JSI +1 :)", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o výhře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - PROHRÁL", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o prohře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -1010,7 +1048,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -1022,11 +1060,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         vyhra_hrac += 1 # Přičte se hráči bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - VYHRÁL JSI +1 :)", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o výhře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
             
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - PROHRAL", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o prohře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -1046,7 +1084,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -1058,11 +1096,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - PROHRÁL JSI :(", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče a informací o prohře
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - VYHRÁL +1", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera a informací o výhře
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -1087,7 +1125,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -1097,11 +1135,11 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         okeno()
 
         hrac_text = tk.Label(okno, text=f"({hrac_skore}) - SÁZKA SE VRACÍ", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         dealer_text = tk.Label(okno, text=f"({dealer_skore}) - SÁZKA SE VRACÍ", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
         dealer_text.place(x=330, y=35) # Zobrazí součet u dealera
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet dealera
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
@@ -1128,7 +1166,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14))# Vytvoří label s celkovým skóre
         ve_hre = tk.Label(okno, text=f"Karet v balíčku {zbytek}", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
         ve_hre.place(x=1047, y=220) # Zobrazí informaci o počtu karet v balíčku
 
-        # Vytvoří se tři tlačítka pro ukončení aplikace, pro pokračováním hry nebo s možnstí změnit obtížnost
+        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
         nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
         nova_dvojice_btn.place(x=670, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
@@ -1158,21 +1196,16 @@ def hra_se_zbylymi_kartami(balicek):
 
     else:
 
-        test_text = tk.Label(okno, text="Hráč je na tahu", bg="black", fg="white", font=("Arial", 20)) # Vytvoří label s nápisem kdo je na řadě
-        test_text.place(x=690, y=255) # Zobrazí nápis
-
-        okno.after(5000, test_text.place_forget)
-
         # Dealer
-        dealer_karty_list, dealer_skore = rozdani_karet(1, balicek) # Rozdání první karety
+        dealer_karty_list, dealer_skore = rozdani_karet(2, balicek) # Rozdání první karety
         dealer_text = tk.Label(okno, text=f"({dealer_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
         dealer_text.place(x=330, y=35) # Zobrazí součet
-        zobrazit_karty(dealer_karty_list) # Zobrazí obrazky karet dealera
+        zobrazit_karty(dealer_karty_list, True) # Zobrazí obrazky karet dealera
 
         # Hráč
         hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání prvních dvou karet
         hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre
-        zobrazit_karty(hrac_karty_list) # Zobrazí obrazky karet hráče
+        zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
         if obtiznost == 1:
             hrac_text.place(x=330 , y=345) # Zobrazí součet u hráče
