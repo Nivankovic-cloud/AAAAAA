@@ -250,20 +250,20 @@ def vytvor_tlacitko(vklad, okno, trakce, balanc_text, sazka_text):
 
 # Definování funkce pro vklad
 def vklad(obt):
-    okeno()  # Tato funkce zřejmě maže všechny widgety
+    okeno()  # Čistění okna
 
     global balanc, mezi_vklad, obtiznost
 
-    # Pokud vám dojdou peníze, končíte a ukáže se vám statistika
+    # S nulovým balancem se vám ukáže statistika
     if balanc == 0 and mezi_vklad == 0:
         stat()
     else:  # Pokud máte peníze, můžete stále sázet
         obtiznost += obt
 
         balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
-        balanc_text.place(x=25, y=25)  # Vypíše zbylé kredity
+        balanc_text.place(x=25, y=25)  # Vypíše zbylý kredity
         sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="black", fg="white", font=("Arial", 37))
-        sazka_text.place(x=550, y=250)  # Ukazuje kolik sázíte
+        sazka_text.place(x=550, y=250)  # Výpis sázky
 
         # Seznam hodnot vkladů
         vklady = [25, 50, 100, 200, 500, 1000, 2000, 5000]
@@ -295,18 +295,18 @@ def vklad(obt):
 
 # Definování funkce pro vklad
 def pokracovani(balicek):
-    okeno()  # Tato funkce zřejmě maže všechny widgety
+    okeno()  # Čistění okna
 
     global balanc, mezi_vklad, obtiznost
 
-    # Pokud vám dojdou peníze, končíte a ukáže se vám statistika
+    # S nulovým balancem se vám ukáže statistika
     if balanc == 0 and mezi_vklad == 0:
         stat()
     else:  # Pokud máte peníze, můžete stále sázet
         balanc_text = tk.Label(okno, text=f"Kredit: {int(balanc)}", bg="navy", fg="white", font=("Arial", 24))
         balanc_text.place(x=25, y=25)  # Vypíše zbylé kredity
         sazka_text = tk.Label(okno, text=f"{int(mezi_vklad)}", bg="black", fg="white", font=("Arial", 37))
-        sazka_text.place(x=550, y=250)  # Ukazuje kolik sázíte
+        sazka_text.place(x=550, y=250)  # Výpis sázky
 
         # Seznam hodnot vkladů
         vklady = [25, 50, 100, 200, 500, 1000, 2000, 5000]
