@@ -446,8 +446,8 @@ def trakce(hodnota):
         mezi_vklad += int(hodnota)
     else: # V jiném případě vyskoči varování
         varov = tk.Label(okno, text="Nemůžeš víc vsadit, nemáš dostatečný balanc", bg="red2", fg="white", font=("Arial", 20))
-        varov.pack(pady=250)
-        okno.after(1000, varov.pack_forget)
+        varov.place(x=350, y=400) # Zobrazí varování
+        okno.after(1750, varov.place_forget)
         
     if hodnota == 1:
         balanc += mezi_vklad
@@ -966,7 +966,7 @@ def stand(balicek):
 
     okno.update() # Aktualizuje okno
     
-    while dealer_skore < 17 and (hrac_skore >= dealer_skore or bot_skore >= dealer_skore): # Dealer líže kartu dokud nemá přes 17 (dealer přes 17)
+    while dealer_skore < 17 and ( dealer_skore <= hrac_skore or dealer_skore <= bot_skore): # Dealer líže kartu dokud nemá přes 17 (dealer přes 17)
         karta = balicek.pop() # Vybere kartu z balíčku
         dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
         dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
