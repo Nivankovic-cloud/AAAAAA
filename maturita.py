@@ -223,7 +223,7 @@ def stat():
     nej_vyhra.pack(padx=12, pady=12)
 
     # Label pro určení největšího vkladu 
-    nej_vklad = tk.Label(frame, text=f"Největší vklad činil................{vklad_nej}", bg="darkgreen", fg="#FCE6C9", font=("Arial", 20))
+    nej_vklad = tk.Label(frame, text=f"Největší vklad činil................{int(vklad_nej)}", bg="darkgreen", fg="#FCE6C9", font=("Arial", 20))
     nej_vklad.pack(padx=12, pady=12)
 
     # Určování proměné obce pro obrazovku stat, když vám dojdou peníze končíte hru
@@ -399,7 +399,7 @@ def pokracovani(balicek):
 # Vyplácení výher
 def vyplaceni():
 
-    global balanc, mezi_vklad, vklad_nej, vyhra_nej, vyhra_kolik, sazka_text, vyhra
+    global balanc, mezi_vklad, vklad_nej, vyhra_nej, vyhra_kolik, sazka_text
 
     # Počítání celkovývh výher (vyplácení kreditů = výhra hráče)
     vyhra_kolik += 1
@@ -409,13 +409,19 @@ def vyplaceni():
         vyhra = mezi_vklad * 2.5
         balanc += vyhra
 
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
+
     elif obtiznost == 2: # Vyplácení kreditů ve střední hře
         vyhra = mezi_vklad * 2
         balanc += vyhra
 
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
+
     else: # Vyplácení kreditů v těžké hře
         vyhra = mezi_vklad * 1.5
         balanc += vyhra
+
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
 
     # Porovnávání největších výher a sázek
     if mezi_vklad > vklad_nej:
@@ -696,7 +702,7 @@ def hit(balicek):
 
             okno.update() # Aktualizuje okno
 
-            while dealer_skore < 17 or dealer_skore < bot_skore:
+            while dealer_skore < 17 and dealer_skore < bot_skore: # Dealer líže kartu dokud nemá přes 17
                 karta = balicek.pop() # Vybere kartu z balíčku
                 dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
                 dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
@@ -765,6 +771,8 @@ def double(balicek):
     hrac_text.config(text=f"{int(hrac_skore)}") # Aktualizuje skóre hráče
     zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
+    sazka_text.config(text=f"Vsazeno: {int(mezi_vklad)}") # Aktualizuje sázku
+
     okno.update() # Aktualizuje okno
 
     if hrac_skore > 21: # Pokud hráč má více než 21
@@ -797,7 +805,7 @@ def double(balicek):
 
             okno.update() # Aktualizuje okno
 
-            while dealer_skore < 17 or dealer_skore < bot_skore:
+            while dealer_skore < 17 and dealer_skore < bot_skore:
                 karta = balicek.pop() # Vybere kartu z balíčku
                 dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
                 dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
@@ -815,6 +823,18 @@ def double(balicek):
                 dealer_text.config(text=f"{int(dealer_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
             else:
                 dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
+
+            if mezi_vklad > vklad_nej:
+                vklad_nej = mezi_vklad
+
+            mezi_vklad = 0
+
+            # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
+            nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
+            nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
+            nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
+            nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
+            
         else:
             zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
             dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
@@ -841,7 +861,7 @@ def double(balicek):
 # Stání
 def stand(balicek):
 
-    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, obtiznost, balanc, mezi_vklad, vyhra, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     btn.destroy() # Skryje tlačítka
 
@@ -860,6 +880,8 @@ def stand(balicek):
             ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
 
             okno.update() # Aktualizuje okno
+
+    time.sleep(1)
 
     zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
     dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
@@ -887,8 +909,6 @@ def stand(balicek):
         hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
         dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
 
-        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
-
         vyplaceni()
 
         mezi_vklad = 0
@@ -905,8 +925,6 @@ def stand(balicek):
 
         hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
         dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
-
-        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
 
         vyplaceni()
 
@@ -961,7 +979,7 @@ def stand(balicek):
 def hra_se_zbylymi_kartami(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, ve_hre, btn, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
 
     # Hraje se další partie a přičítá se kvůli tomu 1
     celkem_her += 1
