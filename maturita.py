@@ -713,7 +713,7 @@ def hit(balicek):
 # Funkce double 
 def double(balicek):
 
-    global hrac_skore, dealer_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, vyhra_dealer, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     mezi_vklad = mezi_vklad * 2
 
@@ -770,13 +770,12 @@ def double(balicek):
 
     else:
         time.sleep(1) # Čeká 1 sekundu
-
         stand(balicek)
 
 # Stání
 def stand(balicek):
 
-    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, obtiznost, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     if obtiznost > 1: # Lízání karet pro bota
         while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
