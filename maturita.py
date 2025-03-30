@@ -196,7 +196,7 @@ Přebití:  Pokud hráč přebije 21, prohrává automaticky."""), zpet_btn.plac
 def stat():
     okeno()
 
-    global vyhra_nej, vyhra_kolik, vklad_nej, balanc, celkem_her
+    global vyhra_nej, vyhra_kolik, vklad_nej, balanc, mezi_vklad, celkem_her
 
     frame = tk.Frame(okno, bg="darkgreen")
     frame.pack(padx=12, pady=110)
@@ -227,12 +227,8 @@ def stat():
     nej_vklad.pack(padx=12, pady=12)
 
     # Určování proměné obce pro obrazovku stat, když vám dojdou peníze končíte hru
-    if balanc > 0:
-        obce = 1
-    else:
-        obce = 0
 
-    if obce == 0:
+    if balanc == 0 and mezi_vklad == 0:
         konec_text = tk.Label(okno, text="Konec hry", bg="darkgreen", fg="#FCE6C9", font=("Modak", 50))
         konec_text.pack(side="top", padx=10, pady=10)
 
@@ -251,7 +247,7 @@ def vklad(obt):
     global balanc, mezi_vklad, obtiznost
 
     # Pokud vám dojdou peníze, končíte a ukáže se vám statistika
-    if balanc == 0:
+    if balanc == 0 and mezi_vklad == 0:
         stat()
 
     else: # Pokud máte peníze můžete stale sázet
@@ -331,7 +327,7 @@ def pokracovani(balicek):
     global balanc, mezi_vklad, obtiznost
 
     # Pokud vám dojdou peníze, končíte a ukáže se vám statistika
-    if balanc == 0:
+    if balanc == 0 and mezi_vklad == 0:
         stat()
 
     else: # Pokud máte peníze můžete stale sázet
