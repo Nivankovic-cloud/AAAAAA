@@ -495,7 +495,7 @@ def zobrazit_karty(karty_list, opt):
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=500 + 40 * index, y=380) # Zobrazí karty hráče
             else: # Pokud se jedná o karty dealera
-                if opt == True: # Pokud je opt True, tak se zobrazí zadní strana karty
+                if opt is True: # Pokud je opt True, tak se zobrazí zadní strana karty
                     if index == 1:
                         zadni.place(x=500 + 40, y=70)
                     else: # Pokud je opt False, tak se zobrazí karta lícem nahoru
@@ -507,7 +507,7 @@ def zobrazit_karty(karty_list, opt):
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=750 + 40 * index, y=380) # Zobrazí karty hráče
             elif karty_list == dealer_karty_list: # Pokud se jedná o karty dealera
-                if opt == True: # Pokud je opt True, tak se zobrazí zadní strana karty
+                if opt is True: # Pokud je opt True, tak se zobrazí zadní strana karty
                     if index == 1:
                         zadni.place(x=500 + 40, y=70)
                     else: # Pokud je opt False, tak se zobrazí karta lícem nahoru
