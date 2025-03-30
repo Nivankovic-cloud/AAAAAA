@@ -833,7 +833,7 @@ def hit(balicek):
 # Funkce double 
 def double(balicek):
 
-    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, hrac_text, dealer_text, bot_text, sazka_text, balanc_text, ve_hre, btn, double_btn, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, hrac_text, dealer_text, bot_text, sazka_text, balanc_text, ve_hre, btn, double_btn, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     double_btn.destroy() # Skryje tlačítko pro double
     btn.destroy() # Skryje tlačítka pro hit a stand
