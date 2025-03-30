@@ -778,7 +778,7 @@ def hit(balicek):
 
             okno.update() # Aktualizuje okno
 
-            while dealer_skore < 17 and dealer_skore < bot_skore: # Dealer líže kartu dokud nemá přes 17
+            while dealer_skore < 17 and dealer_skore < bot_skore and bot_skore < 21: # Dealer líže kartu dokud nemá přes 17
                 karta = balicek.pop() # Vybere kartu z balíčku
                 dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
                 dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
@@ -838,8 +838,8 @@ def double(balicek):
     double_btn.destroy() # Skryje tlačítko pro double
     btn.destroy() # Skryje tlačítka pro hit a stand
 
-    balanc -= mezi_vklad # Odečte sázku od kreditu
     mezi_vklad = mezi_vklad * 2 # Zdvojnásobí sázku
+    balanc -= mezi_vklad / 2 # Odečte sázku od kreditu
 
     karta = balicek.pop() # Vybere kartu z balíčku
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
@@ -849,7 +849,7 @@ def double(balicek):
     zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     sazka_text.config(text=f"Vsazeno: {int(mezi_vklad)}") # Aktualizuje sázku
-    balanc_text.config(text=f"Kredit: {int(balanc - mezi_vklad)}") # Aktualizuje kredit hráče
+    balanc_text.config(text=f"Kredit: {int(balanc)}") # Aktualizuje kredit hráče
 
     okno.update() # Aktualizuje okno
 
@@ -883,7 +883,7 @@ def double(balicek):
 
             okno.update() # Aktualizuje okno
 
-            while dealer_skore < 17 and dealer_skore < bot_skore:
+            while dealer_skore < 17 and dealer_skore < bot_skore and bot_skore < 21: # Dealer líže kartu dokud nemá přes 17
                 karta = balicek.pop() # Vybere kartu z balíčku
                 dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
                 dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
