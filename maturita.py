@@ -408,17 +408,17 @@ def vyplaceni():
         vyhra = mezi_vklad * 2.5
         balanc += vyhra
             
-        sazka_text.config(text=f"Vyhráváš: {int(mezi_vklad)}", font=22) # Aktualizuje sázku
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
     elif obtiznost == 2: # Vyplácení kreditů ve střední hře
         vyhra = mezi_vklad * 2
         balanc += vyhra
 
-        sazka_text.config(text=f"Vyhráváš: {int(mezi_vklad)}", font=22) # Aktualizuje sázku
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
     else: # Vyplácení kreditů v těžké hře
         vyhra = mezi_vklad * 1.5
         balanc += vyhra
 
-        sazka_text.config(text=f"Vyhráváš: {int(mezi_vklad)}", font=22) # Aktualizuje sázku
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
 
     # Porovnávání největších výher a sázek
     if mezi_vklad > vklad_nej:
@@ -692,31 +692,36 @@ def hit(balicek):
 
                 okno.update() # Aktualizuje okno
 
-        time.sleep(1)
-
-        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
-        dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
-
-        okno.update() # Aktualizuje okno
-
-        while dealer_skore < bot_skore and bot_skore <= 21 and dealer_skore < 17:
-            karta = balicek.pop() # Vybere kartu z balíčku
-            dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
-            dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
-
-            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
-            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
-
-            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
-            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
-            
             time.sleep(1)
+
+            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+
             okno.update() # Aktualizuje okno
 
-        if dealer_skore > 21: # Pokud dealer má více než 21
-            dealer_text.config(text=f"{int(hrac_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
+            while dealer_skore < bot_skore and bot_skore <= 21 and dealer_skore < 17:
+                karta = balicek.pop() # Vybere kartu z balíčku
+                dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
+                dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
+
+                dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+                zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+                zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+                ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
+            
+                time.sleep(1)
+                okno.update() # Aktualizuje okno
+
+            if dealer_skore > 21: # Pokud dealer má více než 21
+                dealer_text.config(text=f"{int(hrac_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
+            else:
+                dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
         else:
-            dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
+            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+
+            okno.update() # Aktualizuje okno
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -844,8 +849,22 @@ def stand(balicek):
     dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
     okno.update() # Aktualizuje okno
+    
+    while dealer_skore < 17 and dealer_skore <= hrac_skore:
+        karta = balicek.pop() # Vybere kartu z balíčku
+        dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
+        dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
 
-    if hrac_skore < dealer_skore and bot_skore < dealer_skore:
+        dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+        zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+        ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
+            
+        time.sleep(1)
+        okno.update() # Aktualizuje okno
+
+    if hrac_skore < dealer_skore or bot_skore < dealer_skore:
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
@@ -864,21 +883,6 @@ def stand(balicek):
         nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
         nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
-    
-    else:
-        while dealer_skore < 17 and dealer_skore <= hrac_skore:
-            karta = balicek.pop() # Vybere kartu z balíčku
-            dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
-            dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
-
-            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
-            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
-
-            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
-            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
-            
-            time.sleep(1)
-            okno.update() # Aktualizuje okno
 
     if dealer_skore > 21:
 
