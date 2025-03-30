@@ -607,7 +607,7 @@ def hra(balicek):
     # Rozdání karet hráči
     hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání první karety
     hrac_text = tk.Label(okno, text=f"{int(hrac_skore)}", bg="black", fg="white", font=("Arial", 14)) # Zobrazí skóre hráče
-    zobrazit_karty(hrac_karty_list, 1) # Zobrazí karty hráče
+    zobrazit_karty(hrac_karty_list, None) # Zobrazí karty hráče
 
     text_hrac = tk.Label(okno, text="Vaše karty", bg="black", fg="white", font=("Arial", 14)) # Zobrazí text "Hráč"
 
@@ -619,7 +619,7 @@ def hra(balicek):
         # Rozdání karet botovi
         bot_karty_list, bot_skore = rozdani_karet(2, balicek) # Rozdání první karety
         bot_text = tk.Label(okno, text=f"{int(bot_skore)}", bg="black", fg="white", font=("Arial", 14)) # Zobrazí skóre bota
-        zobrazit_karty(bot_karty_list, 1) # Zobrazí karty bota
+        zobrazit_karty(bot_karty_list, None) # Zobrazí karty bota
         bot_text.place(x=230, y=345)
 
         tom_text = tk.Label(okno, text="Tomáš - Host", bg="black", fg="white", font=("Arial", 14)) # Zobrazí text "Bot"
@@ -684,7 +684,7 @@ def hra_se_zbylymi_kartami(balicek):
         # Rozdání karet hráči
         hrac_karty_list, hrac_skore = rozdani_karet(2, balicek) # Rozdání první karety
         hrac_text = tk.Label(okno, text=f"{int(hrac_skore)}", bg="black", fg="white", font=("Arial", 14)) # Zobrazí skóre hráče
-        zobrazit_karty(hrac_karty_list, 1) # Zobrazí karty hráče
+        zobrazit_karty(hrac_karty_list, None) # Zobrazí karty hráče
 
         text_hrac = tk.Label(okno, text="Vaše karty", bg="black", fg="white", font=("Arial", 14)) # Zobrazí text "Hráč"
 
@@ -696,7 +696,7 @@ def hra_se_zbylymi_kartami(balicek):
             # Rozdání karet botovi
             bot_karty_list, bot_skore = rozdani_karet(2, balicek) # Rozdání první karety
             bot_text = tk.Label(okno, text=f"{int(bot_skore)}", bg="black", fg="white", font=("Arial", 14)) # Zobrazí skóre bota
-            zobrazit_karty(bot_karty_list, 1) # Zobrazí karty bota
+            zobrazit_karty(bot_karty_list, None) # Zobrazí karty bota
             bot_text.place(x=230, y=345)
 
             tom_text = tk.Label(okno, text="Tomáš - Host", bg="black", fg="white", font=("Arial", 14)) # Zobrazí text "Bot"
@@ -740,7 +740,7 @@ def hit(balicek):
     hrac_skore += hodnota_karty(karta, hrac_skore) # Přičte hodnotu karty k celkovému skóre hráče
 
     hrac_text.config(text=f"{int(hrac_skore)}") # Aktualizuje skóre hráče
-    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
+    zobrazit_karty(hrac_karty_list, None) # Zobrazí obrazky karet hráče
 
     zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
     ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
@@ -765,7 +765,7 @@ def hit(balicek):
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
                 bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
-                zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+                zobrazit_karty(bot_karty_list, None) # Zobrazí obrazky karet hráče
 
                 zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
                 ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
@@ -847,7 +847,7 @@ def double(balicek):
     hrac_skore += hodnota_karty(karta, hrac_skore) # Přičte hodnotu karty k celkovému skóre hráče
     
     hrac_text.config(text=f"{int(hrac_skore)}") # Aktualizuje skóre hráče
-    zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
+    zobrazit_karty(hrac_karty_list, None)# Zobrazí obrazky karet hráče
 
     sazka_text.config(text=f"Vsazeno: {int(mezi_vklad)}") # Aktualizuje sázku
     balanc_text.config(text=f"Kredit: {int(balanc)}") # Aktualizuje kredit hráče
@@ -870,7 +870,7 @@ def double(balicek):
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
                 bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
-                zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+                zobrazit_karty(bot_karty_list, None) # Zobrazí obrazky karet hráče
 
                 zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
                 ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
@@ -953,7 +953,7 @@ def stand(balicek):
             bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
             bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
-            zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+            zobrazit_karty(bot_karty_list, None) # Zobrazí obrazky karet hráče
 
             zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
             ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
