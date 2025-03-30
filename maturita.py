@@ -12,20 +12,20 @@ okno.configure(bg="darkgreen")
 
 ######################### Globální promněné #########################
 # Seznam pro sledování štítků s obrázky
-image_labels = []
+image_labels = [] 
 
-celkem_her = 0
+celkem_her = 0 # Celkový počet her
 
-vyhra_nej = 0
-vklad_nej = 0
-vyhra_kolik = 0
+vyhra_nej = 0 # Největší výhra
+vklad_nej = 0 # Největší vklad
+vyhra_kolik = 0 # Kolik jste nejvíc vyhráli
 
-balanc = int(10000)
-mezi_vklad = 0
+balanc = int(10000) # Počáteční kredit
+mezi_vklad = 0 # Vsazeno
 
-obtiznost = 0
+obtiznost = 0 # Obtížnost hry
 
-hrac_skore = 0
+hrac_skore = 0 
 dealer_skore = 0 
 bot_skore = 0
 
@@ -37,10 +37,6 @@ vyhra_hrac = 0
 vyhra_dealer = 0
 vyhra_bot = 0
 
-#hrac_text = tk.Label(okno, text=f"({hrac_skore})", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre hráče
-#dealer_text = tk.Label(okno, text=f"(?)", bg="black", fg="white", font=("Arial", 14)) # Vytvoří label s celkovým skóre dealera
-#bot_text = tk.Label(okno, text=f"({bot_skore})", bg="black", fg="white", font=("Arial", 14))
-#ve_hre = tk.Label(okno, text=f"Karet v balíčku ", bg="blue", fg="white") # Vytvoří label s informací o počtu karet v balíčku
 ######################### Balíček #########################
 
 # Balíček karet
@@ -126,11 +122,11 @@ def zobraz_menu():
     okeno()
 
     # Nadpis
-    nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69))
+    nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69)) # Definuje nadpis
     nadpis.pack(padx=10, pady=75) # Generuje nadpis
 
     # Tlačítka v hlavním menu
-    moznosti = tk.Frame(okno, bg="darkgreen")
+    moznosti = tk.Frame(okno, bg="darkgreen") 
     moznosti.pack(padx=10, pady=65) # Definuje možnosti
 
     zacatek_btn = tk.Button(moznosti, text ="Začátek hry", command=lambda: obtiznost_menu())
@@ -148,7 +144,7 @@ def zobraz_pravidla():
     pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku", bg="darkgreen", fg="#FCE6C9", font=("Modak", 33)) # Nadpis
     pravidla_nadpis.pack(padx=10, pady=10) # Zobrazení nadpisu
 
-    frame = tk.Frame(okno, bg="darkgreen")
+    frame = tk.Frame(okno, bg="darkgreen") 
     frame.pack(padx=10, pady=80)
 
     prom = tk.Label(frame, text="""1. Cíl hry
@@ -409,23 +405,23 @@ def vyplaceni():
 
     # Vyplácení ve hře
     if obtiznost == 1: # Vyplácení kreditů v jednoduché hře
-            vyhra = mezi_vklad * 2.5
-            balanc += vyhra
+        vyhra = mezi_vklad * 2.5
+        balanc += vyhra
             
-            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
-            sazka_text.place(x=10, y=50)
+        sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
     elif obtiznost == 2: # Vyplácení kreditů ve střední hře
-            vyhra = mezi_vklad * 2
-            balanc += vyhra
+        vyhra = mezi_vklad * 2
+        balanc += vyhra
 
-            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
-            sazka_text.place(x=10, y=50)
+        sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
     else: # Vyplácení kreditů v těžké hře
-            vyhra = mezi_vklad * 1.5
-            balanc += vyhra
+        vyhra = mezi_vklad * 1.5
+        balanc += vyhra
 
-            sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
-            sazka_text.place(x=10, y=50)
+        sazka_text = tk.Label(okno, text=f"Vyhráváš: + {int(vyhra)}", bg="silver", fg="black", font=("Arial", 25))
+        sazka_text.place(x=10, y=50)
 
     # Porovnávání největších výher a sázek
     if mezi_vklad > vklad_nej:
@@ -499,10 +495,10 @@ def zobrazit_karty(karty_list, opt):
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=500 + 40 * index, y=380) # Zobrazí karty hráče
             else: # Pokud se jedná o karty dealera
-                if opt == True:
+                if opt == True: # Pokud je opt True, tak se zobrazí zadní strana karty
                     if index == 1:
                         zadni.place(x=500 + 40, y=70)
-                    else:
+                    else: # Pokud je opt False, tak se zobrazí karta lícem nahoru
                         vize.place(x=500 + 40 * index, y=70) # Zobrazí karty dealera
                 else:
                     vize.place(x=500 + 40 * index, y=70) # Zobrazí karty dealera
@@ -511,10 +507,10 @@ def zobrazit_karty(karty_list, opt):
             if karty_list == hrac_karty_list: # Pokud se jedná o karty hráče
                 vize.place(x=750 + 40 * index, y=380) # Zobrazí karty hráče
             elif karty_list == dealer_karty_list: # Pokud se jedná o karty dealera
-                if opt == True:
+                if opt == True: # Pokud je opt True, tak se zobrazí zadní strana karty
                     if index == 1:
                         zadni.place(x=500 + 40, y=70)
-                    else:
+                    else: # Pokud je opt False, tak se zobrazí karta lícem nahoru
                         vize.place(x=500 + 40 * index, y=70) # Zobrazí karty dealera
                 else:
                     vize.place(x=500 + 40 * index, y=70) # Zobrazí karty dealera
@@ -549,7 +545,7 @@ def rozdani_karet(pocet_karet, balicek,):
 def obtiznost_menu():
     okeno()
     
-    global hrac_skore, dealer_skore, vyhra_hrac, vyhra_dealer, obtiznost # Globální proměnné pro skóre a obtiznost
+    global vyhra_hrac, vyhra_dealer, obtiznost # Globální proměnné pro skóre a obtiznost
 
     # Vynulování skóre aobtížnosti
     vyhra_hrac = 0
@@ -594,7 +590,7 @@ def obtiznost_menu():
 def hra(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, ve_hre, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
     # Hraje se první partie a přičítá se kvůli tomu 1
     celkem_her += 1
@@ -638,9 +634,9 @@ def hra(balicek):
 Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skóre, kdo vyhrával kolik her
     skore.place(x=950, y=40) # Zobrazí celkové skóre
 
-    hit_btn = tk.Button(okno, text="Hit", command=lambda: (hit(balicek), ))  # Tlačítko pro další kartu
-    stand_btn = tk.Button(okno, text="Stand", command=lambda: (stand(balicek), ))  # Tlačítko pro stání
-    double_btn = tk.Button(okno, text="2x", command=lambda: (double(balicek), ))  # Tlačítko pro double
+    hit_btn = tk.Button(okno, text="Hit", command=lambda: hit(balicek))  # Tlačítko pro další kartu
+    stand_btn = tk.Button(okno, text="Stand", command=lambda: stand(balicek))  # Tlačítko pro stání
+    double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek))  # Tlačítko pro double
 
     # Zobrazení tlačítek podle obtížnosti
     btn_x = 0 if obtiznost == 1 else 250
@@ -654,13 +650,17 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 # Další karta
 def hit(balicek): 
     
-    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, ve_hre, balanc, mezi_vklad, obtiznost, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     karta = balicek.pop() # Vybere kartu z balíčku
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
     hrac_skore += hodnota_karty(karta, hrac_skore) # Přičte hodnotu karty k celkovému skóre hráče
-    
+
+    hrac_text.config(text=f"{int(hrac_skore)}") # Aktualizuje skóre hráče
     zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
+
+    zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+    ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
 
     okno.update() # Aktualizuje okno
     
@@ -676,13 +676,18 @@ def hit(balicek):
                 bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
+                bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
                 zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+
+                zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+                ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
 
                 okno.update() # Aktualizuje okno
 
         time.sleep(1)
 
         zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+        dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
         okno.update() # Aktualizuje okno
 
@@ -691,10 +696,17 @@ def hit(balicek):
             dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
             dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
 
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
             zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
             
             time.sleep(1)
             okno.update() # Aktualizuje okno
+
+        hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -713,7 +725,7 @@ def hit(balicek):
 # Funkce double 
 def double(balicek):
 
-    global hrac_skore, dealer_skore, vyhra_dealer, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, vyhra_dealer, hrac_text, dealer_text, bot_text, ve_hre, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     mezi_vklad = mezi_vklad * 2
 
@@ -721,6 +733,7 @@ def double(balicek):
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
     hrac_skore += hodnota_karty(karta, hrac_skore) # Přičte hodnotu karty k celkovému skóre hráče
     
+    hrac_text.config(text=f"{int(hrac_skore)}") # Aktualizuje skóre hráče
     zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     okno.update() # Aktualizuje okno
@@ -728,6 +741,8 @@ def double(balicek):
     if hrac_skore > 21: # Pokud hráč má více než 21
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
+
+        hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
 
         if obtiznost > 1: # Lízání karet pro bota
             while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
@@ -737,13 +752,18 @@ def double(balicek):
                 bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
                 bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
+                bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
                 zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+
+                zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+                ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
 
                 okno.update() # Aktualizuje okno
 
         time.sleep(1)
 
         zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+        dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
         okno.update() # Aktualizuje okno
 
@@ -752,10 +772,17 @@ def double(balicek):
             dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
             dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
 
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
             zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
             
             time.sleep(1)
             okno.update() # Aktualizuje okno
+
+        hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -775,7 +802,7 @@ def double(balicek):
 # Stání
 def stand(balicek):
 
-    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, ve_hre, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     if obtiznost > 1: # Lízání karet pro bota
         while bot_skore < 19: # Bot líže kartu dokud nemá přes 19 (dealer přes 17)
@@ -785,19 +812,27 @@ def stand(balicek):
             bot_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
             bot_skore += hodnota_karty(karta, bot_skore) # Přičte hodnotu karty k celkovému skóre hráč
 
+            bot_text.config(text=f"{int(bot_skore)}") # Aktualizuje skóre hráče
             zobrazit_karty(bot_karty_list, 1) # Zobrazí obrazky karet hráče
+
+            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
 
             okno.update() # Aktualizuje okno
 
     time.sleep(1)
 
     zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+    dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
     okno.update() # Aktualizuje okno
 
     if hrac_skore < dealer_skore and bot_skore < dealer_skore:
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
+
+        hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
 
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
@@ -816,7 +851,11 @@ def stand(balicek):
             dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
             dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
 
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
             zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
             
             time.sleep(1)
             okno.update() # Aktualizuje okno
@@ -824,6 +863,9 @@ def stand(balicek):
     if dealer_skore > 21:
 
         vyhra_hrac += 1 # Přičte se hráči bod za výhru
+
+        hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
 
         # Žetony
         vyplaceni()
@@ -839,6 +881,9 @@ def stand(balicek):
 
         vyhra_hrac += 1 # Přičte se hráči bod za výhru
 
+        hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
+
         # Žetony
         vyplaceni()
         mezi_vklad = 0
@@ -853,6 +898,9 @@ def stand(balicek):
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
+        hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
+
         if mezi_vklad > vklad_nej:
             vklad_nej = mezi_vklad
 
@@ -865,6 +913,8 @@ def stand(balicek):
         nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
 
     else:
+        hrac_text.config(text=f"{int(hrac_skore)} - Push") # Aktualizuje skóre hráče
+        dealer_text.config(text=f"{int(dealer_skore)} - Push") # Aktualizuje skóre dealera
 
         balanc += mezi_vklad
 
@@ -883,7 +933,7 @@ def stand(balicek):
 def hra_se_zbylymi_kartami(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, ve_hre, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
 
     # Hraje se další partie a přičítá se kvůli tomu 1
     celkem_her += 1
