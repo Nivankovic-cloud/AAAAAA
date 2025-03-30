@@ -22,6 +22,7 @@ vyhra_kolik = 0
 
 balanc = int(10000) # Počáteční kredit
 mezi_vklad = 0
+vyhra = 0
 
 obtiznost = 0
 
@@ -398,7 +399,7 @@ def pokracovani(balicek):
 # Vyplácení výher
 def vyplaceni():
 
-    global balanc, mezi_vklad, vklad_nej, vyhra_nej, vyhra_kolik, sazka_text
+    global balanc, mezi_vklad, vklad_nej, vyhra_nej, vyhra_kolik, sazka_text, vyhra
 
     # Počítání celkovývh výher (vyplácení kreditů = výhra hráče)
     vyhra_kolik += 1
@@ -407,18 +408,14 @@ def vyplaceni():
     if obtiznost == 1: # Vyplácení kreditů v jednoduché hře
         vyhra = mezi_vklad * 2.5
         balanc += vyhra
-            
-        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
+
     elif obtiznost == 2: # Vyplácení kreditů ve střední hře
         vyhra = mezi_vklad * 2
         balanc += vyhra
 
-        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
     else: # Vyplácení kreditů v těžké hře
         vyhra = mezi_vklad * 1.5
         balanc += vyhra
-
-        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
 
     # Porovnávání největších výher a sázek
     if mezi_vklad > vklad_nej:
@@ -647,7 +644,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
     btn.pack(side="right", anchor="s", pady=50, padx=70) # Zobrazení frame s tlačítky
 
     double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek))  # Tlačítko pro double
-    if mezi_vklad * 2 <= balanc: # Pokud je možné zdvojnásobit sázku
+    if mezi_vklad <= balanc: # Pokud je možné zdvojnásobit sázku
         double_btn.place(x=1020, y=580) # Zobrazí tlačítko
 
 # Další karta
@@ -699,7 +696,7 @@ def hit(balicek):
 
             okno.update() # Aktualizuje okno
 
-            while dealer_skore < bot_skore and bot_skore <= 21 and dealer_skore < 17:
+            while dealer_skore < 17 or dealer_skore < bot_skore:
                 karta = balicek.pop() # Vybere kartu z balíčku
                 dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
                 dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
@@ -714,28 +711,29 @@ def hit(balicek):
                 okno.update() # Aktualizuje okno
 
             if dealer_skore > 21: # Pokud dealer má více než 21
-                dealer_text.config(text=f"{int(hrac_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
+                dealer_text.config(text=f"{int(dealer_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
             else:
                 dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
+
         else:
             zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
             dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
             okno.update() # Aktualizuje okno
 
-        if mezi_vklad > vklad_nej:
-            vklad_nej = mezi_vklad
+            if mezi_vklad > vklad_nej:
+                vklad_nej = mezi_vklad
 
-        mezi_vklad = 0
+            hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+            sazka_text.config(text=f"Ztrácíš: {int(mezi_vklad)}") # Aktualizuje sázku
 
-        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
-        nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
-        nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
-        nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
-        nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
+            mezi_vklad = 0
 
-    else:
-        pass
+            # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
+            nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
+            nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
+            nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
+            nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
 
 # Funkce double 
 def double(balicek):
@@ -779,43 +777,50 @@ def double(balicek):
 
                 okno.update() # Aktualizuje okno
 
-        time.sleep(1)
-
-        zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
-        dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
-
-        okno.update() # Aktualizuje okno
-
-        while dealer_skore < bot_skore and bot_skore <= 21 and dealer_skore < 17:
-            karta = balicek.pop() # Vybere kartu z balíčku
-            dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
-            dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
-
-            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
-            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
-
-            zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
-            ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
-            
             time.sleep(1)
+
+            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+
             okno.update() # Aktualizuje okno
 
-        if dealer_skore > 21: # Pokud dealer má více než 21
-            dealer_text.config(text=f"{int(hrac_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
+            while dealer_skore < 17 or dealer_skore < bot_skore:
+                karta = balicek.pop() # Vybere kartu z balíčku
+                dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
+                dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
+
+                dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
+                zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+
+                zbytek = len(balicek) # Zjistí, kolik karet zbývá v balíčku
+                ve_hre.config(text=f"Karet v balíčku {zbytek}") # Zobrazí informaci o počtu karet v balíčku
+            
+                time.sleep(1)
+                okno.update() # Aktualizuje okno  ####
+
+            if dealer_skore > 21: # Pokud dealer má více než 21
+                dealer_text.config(text=f"{int(dealer_skore)} - Prohrál i Dealer") # Aktualizuje skóre hráče
+            else:
+                dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
         else:
-            dealer_text.config(text=f"{int(dealer_skore)} - Vyhrál") # Aktualizuje skóre dealera
+            zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
+            dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
-        if mezi_vklad > vklad_nej:
-            vklad_nej = mezi_vklad
+            okno.update() # Aktualizuje okno
 
-        mezi_vklad = 0
+            if mezi_vklad > vklad_nej:
+                vklad_nej = mezi_vklad
 
-        # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
-        nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
-        nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
-        nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
-        nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
+            hrac_text.config(text=f"{int(hrac_skore)} - Prohrál jsi") # Aktualizuje skóre hráče
+            sazka_text.config(text=f"Ztrácíš: {int(mezi_vklad)}") # Aktualizuje sázku
 
+            mezi_vklad = 0
+
+            # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
+            nova_dvojice_btn = tk.Button(okno, text="Nová sázka", command=lambda: pokracovani(balicek))
+            nova_dvojice_btn.place(x=520, y=620) # Pokračování ve hře
+            nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
+            nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
     else:
         time.sleep(1) # Čeká 1 sekundu
         stand(balicek)
@@ -823,7 +828,7 @@ def double(balicek):
 # Stání
 def stand(balicek):
 
-    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, obtiznost, balanc, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global dealer_skore, bot_skore, vyhra_dealer, vyhra_hrac, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, obtiznost, balanc, mezi_vklad, vyhra, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     btn.destroy() # Skryje tlačítka
 
@@ -843,14 +848,12 @@ def stand(balicek):
 
             okno.update() # Aktualizuje okno
 
-    time.sleep(1)
-
     zobrazit_karty(dealer_karty_list, False) # Zobrazí obrazky karet
     dealer_text.config(text=f"{int(dealer_skore)}") # Aktualizuje skóre dealera
 
     okno.update() # Aktualizuje okno
     
-    while dealer_skore < 17 and dealer_skore <= hrac_skore:
+    while dealer_skore < 17 or dealer_skore <= hrac_skore or dealer_skore <= bot_skore: # Dealer líže kartu dokud nemá přes 17 (dealer přes 17)
         karta = balicek.pop() # Vybere kartu z balíčku
         dealer_karty_list.append(karta) # Přidá kartu do seznamu karet dealera
         dealer_skore += hodnota_karty(karta, dealer_skore) # Přičte hodnotu karty k celkovému skóre dealera
@@ -864,7 +867,7 @@ def stand(balicek):
         time.sleep(1)
         okno.update() # Aktualizuje okno
 
-    if hrac_skore < dealer_skore or bot_skore < dealer_skore:
+    if hrac_skore < dealer_skore or bot_skore < dealer_skore: # Pokud dealer vyhrál
 
         vyhra_dealer += 1 # Přičte se dealerovi bod za výhru
 
@@ -884,15 +887,17 @@ def stand(balicek):
         nova_hra_btn = tk.Button(okno, text="Obtížnosti", command=lambda: obtiznost_menu())
         nova_hra_btn.place(x=25, y=670) # Změna obtížnosti
 
-    if dealer_skore > 21:
+    elif dealer_skore > 21:
 
         vyhra_hrac += 1 # Přičte se hráči bod za výhru
 
         hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
         dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
 
-        # Žetony
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
+
         vyplaceni()
+
         mezi_vklad = 0
 
         # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
@@ -908,8 +913,10 @@ def stand(balicek):
         hrac_text.config(text=f"{int(hrac_skore)} - Vyhrál jsi") # Aktualizuje skóre hráče
         dealer_text.config(text=f"{int(dealer_skore)} - Prohrál") # Aktualizuje skóre dealera
 
-        # Žetony
+        sazka_text.config(text=f"Vyhráváš: {int(vyhra)}") # Aktualizuje sázku
+
         vyplaceni()
+
         mezi_vklad = 0
 
         # Vytvoří se dvě tlačítka pro pokračováním hry nebo s možnstí změnit obtížnost
@@ -941,6 +948,8 @@ def stand(balicek):
     else:
         hrac_text.config(text=f"{int(hrac_skore)} - Push") # Aktualizuje skóre hráče
         dealer_text.config(text=f"{int(dealer_skore)} - Push") # Aktualizuje skóre dealera
+
+        sazka_text.config(text=f"Vrací se ti: {int(mezi_vklad)}") # Aktualizuje sázku
 
         balanc += mezi_vklad
 
@@ -1029,7 +1038,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
         btn.pack(side="right", anchor="s", pady=50, padx=70) # Zobrazení frame s tlačítky
 
         double_btn = tk.Button(okno, text="2x", command=lambda: double(balicek))  # Tlačítko pro double
-        if mezi_vklad * 2 <= balanc: # Pokud je možné zdvojnásobit sázku
+        if mezi_vklad <= balanc: # Pokud je možné zdvojnásobit sázku
             double_btn.place(x=1020, y=580) # Zobrazí tlačítko
 
 ######################### Vykreslování okna #########################
