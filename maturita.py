@@ -525,7 +525,7 @@ def michani(obt):
     return balicek # Vrátí zamíchaný balíček jako výstup
 
 # Funkce pro rozdání karet
-def rozdani_karet(pocet_karet, balicek,):
+def rozdani_karet(pocet_karet, balicek):
     karty_list = [] # Seznam karet
     skore = 0
 
