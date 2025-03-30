@@ -589,7 +589,7 @@ def obtiznost_menu():
 def hra(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, sazka_text, btn, double_btn, ve_hre, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, sazka_text, balanc_text, btn, double_btn, ve_hre, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre, seznamy karet
 
     # Hraje se první partie a přičítá se kvůli tomu 1
     celkem_her += 1
@@ -656,7 +656,7 @@ Hráč: {vyhra_hrac}""", font=("Arial", 14)) # Vytvoří label s celkovým skór
 def hra_se_zbylymi_kartami(balicek):
     okeno()
 
-    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, double_btn, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, hrac_karty_list, dealer_karty_list, bot_karty_list, hrac_text, dealer_text, bot_text, sazka_text, balanc_text, ve_hre, btn, double_btn, balanc, mezi_vklad, obtiznost, celkem_her # Globální proměnné pro skóre a seznamy karet
 
     # Hraje se další partie a přičítá se kvůli tomu 1
     celkem_her += 1
@@ -833,12 +833,13 @@ def hit(balicek):
 # Funkce double 
 def double(balicek):
 
-    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, hrac_text, dealer_text, bot_text, sazka_text, ve_hre, btn, double_btn, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
+    global hrac_skore, dealer_skore, bot_skore, vyhra_dealer, hrac_text, dealer_text, bot_text, sazka_text, balanc_text, ve_hre, btn, double_btn, obtiznost, mezi_vklad, vklad_nej # Globální proměnné pro skóre a seznamy karet
 
     double_btn.destroy() # Skryje tlačítko pro double
     btn.destroy() # Skryje tlačítka pro hit a stand
 
-    mezi_vklad = mezi_vklad * 2
+    balanc -= mezi_vklad # Odečte sázku od kreditu
+    mezi_vklad = mezi_vklad * 2 # Zdvojnásobí sázku
 
     karta = balicek.pop() # Vybere kartu z balíčku
     hrac_karty_list.append(karta) # Přidá kartu do seznamu karet hráče
@@ -848,6 +849,7 @@ def double(balicek):
     zobrazit_karty(hrac_karty_list, 1) # Zobrazí obrazky karet hráče
 
     sazka_text.config(text=f"Vsazeno: {int(mezi_vklad)}") # Aktualizuje sázku
+    balanc_text.config(text=f"Kredit: {int(balanc - mezi_vklad)}") # Aktualizuje kredit hráče
 
     okno.update() # Aktualizuje okno
 
