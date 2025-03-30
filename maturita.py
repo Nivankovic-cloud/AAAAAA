@@ -3,7 +3,8 @@ from PIL import Image, ImageTk
 import time
 import random
 
-# Samotné okno aplikace
+######################### Samotné okno aplikace #########################
+
 okno = tk.Tk()
 okno.title("Blackjack")
 okno.geometry("1200x720")
@@ -122,7 +123,7 @@ def zobraz_menu():
     okeno()
 
     # Nadpis
-    nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 69)) # Definuje nadpis
+    nadpis = tk.Label(okno, text="BLACKJACK", fg="#FCE6C9", bg="darkgreen", font=("Modak", 75)) # Definuje nadpis
     nadpis.pack(padx=10, pady=75) # Generuje nadpis
 
     # Tlačítka v hlavním menu
@@ -141,7 +142,7 @@ def zobraz_pravidla():
     okeno()
     
     # Zobrazit pravidla
-    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku", bg="darkgreen", fg="#FCE6C9", font=("Modak", 33)) # Nadpis
+    pravidla_nadpis = tk.Label(okno, text="Pravidla Blackjacku", bg="darkgreen", fg="#FCE6C9", font=("Modak", 45)) # Nadpis
     pravidla_nadpis.pack(padx=10, pady=10) # Zobrazení nadpisu
 
     frame = tk.Frame(okno, bg="darkgreen") 
@@ -149,7 +150,7 @@ def zobraz_pravidla():
 
     prom = tk.Label(frame, text="""1. Cíl hry
 Cílem je mít na ruce součet blíže k hodnotě 21 než dealer,
-aniž bys překročil tuto hodnotu (tzv. "přebití" neboli bust).""", font=("Arial", 20)) # Nadpis
+aniž bys překročil tuto hodnotu (tzv. "přebití" neboli bust).""", bg="darkgreen", fg="#FCE6C9", font=("Arial", 20)) # Nadpis
     prom.pack()
 
     btn1 = tk.Button(okno, text="Další", command=lambda: (prom.config(text="""2. Hodnota karet
@@ -232,7 +233,7 @@ def stat():
         obce = 0
 
     if obce == 0:
-        konec_text = tk.Label(okno, text="Konec hry", bg="darkgreen", fg="#FCE6C9", font=("Modak", 45))
+        konec_text = tk.Label(okno, text="Konec hry", bg="darkgreen", fg="#FCE6C9", font=("Modak", 50))
         konec_text.pack(side="top", padx=10, pady=10)
 
         konec_btn = tk.Button(okno, text ="Konec", command=okno.quit)
