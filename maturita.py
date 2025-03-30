@@ -22,7 +22,6 @@ vyhra_kolik = 0
 
 balanc = int(10000) # Počáteční kredit
 mezi_vklad = 0
-vyhra = 0
 
 obtiznost = 0
 
